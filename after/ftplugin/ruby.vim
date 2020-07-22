@@ -1,6 +1,6 @@
 setlocal tabstop=2
 setlocal shiftwidth=2
-setlocal textwidth=80
+setlocal textwidth=120
 setlocal foldmethod=expr
 setlocal foldexpr=getline(v:lnum)=~'^\\s*#'
 setlocal foldlevel=100 " Open all folds by default
