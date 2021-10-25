@@ -9,3 +9,4 @@ Abolish -buffer {sh,w}old {}ould
 inoreabbr <buffer> arround around
 inoreabbr <buffer> lmk? Let me know if you have any questions.
 inoreabbr <buffer> hth I hope that helps.
+inoreabbr <buffer> yuo you
