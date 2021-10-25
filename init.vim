@@ -1,6 +1,100 @@
-let g:test#preserve_screen = 1
-let test#strategy = 'dispatch'
-let g:dispatch_compilers = { 'bundle exec': '' }
+call plug#begin('~/.vim_plugins')
+" Color scheme
+Plug 'evansb/vim-colors-pencil'
+Plug 'owickstrom/vim-colors-paramount'
+Plug 'rakr/vim-one'
+Plug 'rakr/vim-two-firewatch'
+Plug 'sainnhe/sonokai'
+Plug 'axvr/photon.vim'
+
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+Plug 'junegunn/fzf.vim'
+
+" Telescope (fuzzy finder)
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim' | Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+" A bunch of Tim Pope plugins to make using vim easier
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat' | Plug 'tpope/vim-abolish' | Plug 'tpope/vim-surround' | Plug 'tpope/vim-unimpaired' | Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch' | Plug 'radenling/vim-dispatch-neovim' | Plug 'kassio/neoterm' | Plug 'janko-m/vim-test'
+Plug 'tpope/vim-fugitive' | Plug 'tommcdo/vim-fubitive'
+
+" Git scratch buffer for keeping per-branch notes
+Plug 'dbatten5/vim-scranch' | Plug 'dbakker/vim-projectroot'
+
+" A solid language pack (a collection of language packs)
+Plug 'sheerun/vim-polyglot'
+
+" Async linting engine
+Plug 'dense-analysis/ale'
+
+Plug 'airblade/vim-gitgutter'
+
+" Treesitter for syntax highlighting, etc.
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate', 'branch': '0.5-compat' } | Plug 'romgrk/nvim-treesitter-context'
+
+" Ruby
+Plug 'ruby-formatter/rufo-vim', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+
+" Floating windows
+Plug 'voldikss/vim-floaterm'
+
+" Writing
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+
+" Show indentation
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+call plug#end()
+
+" Initialize telescope
+lua require('telescope').load_extension('fzf')
+
+" Initialize and configure treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    --- disable = { "c", "rust" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+}
+EOF
+
+" Initialize indent blanklines
+lua << EOF
+require("indent_blankline").setup {
+    show_first_indent_level = false,
+    space_char_blankline = " ",
+    show_current_context = true,
+    filetype_exclude = {"help"},
+    buftype_exclude = {"terminal"},
+}
+EOF
+
+let mapleader="\<Space>"
+let maplocalleader=","
+
+let g:ruby_host_prog = expand('$HOME/.rubies/ruby-2.6.6/bin/ruby')
+let g:ruby_path = g:ruby_host_prog
 
 " Git Integration
 let g:gitgutter_map_keys = 0
@@ -11,15 +105,9 @@ let g:gitgutter_sign_modified_removed = '!_'
 let g:gitgutter_sign_removed = '_'
 let g:gitgutter_sign_removed_first_line = '‾'
 
-" Disable both ruby and nodejs providers as they slow down the startup
-" (especially when opening Ruby files)
-let g:loaded_ruby_provider = 1
-let g:loaded_node_provider = 1
-
-" Autocomplete
-let g:deoplete#enable_at_startup = 0
-autocmd InsertEnter * call deoplete#enable()
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:test#preserve_screen = 1
+let test#strategy = 'dispatch'
+"let g:dispatch_compilers = { 'bundle exec': '' }
 
 " Auto-linting
 let g:ale_ruby_rubocop_executable = 'rubocop'
@@ -28,10 +116,11 @@ let g:ale_ruby_rubocop_options='-c ~/.rubocop.yml'
 " fix files on save
 let g:ale_fix_on_save = 1
 
-" Don't run the linter when the file changes or when it's open.  Only when
-" it's saved.
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 1
 let g:ale_lint_on_enter = 0
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_delay = 2000
 
 " use nice symbols for errors and warnings
 let g:ale_set_highlights = 1
@@ -43,180 +132,31 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
 
-" NOTE: These must be defined before vim-crystalline is loaded.
-function! MyALEStautsLine()
-    let total = ale#statusline#Count(bufnr('%'))['total']
-    if total == 0
-        return ''
-    else
-        return printf(" ⚠%d", total)
-    endif
-endfunction
+" Disable brakeman linter
+let g:ale_linters_ignore = {
+\   'ruby': ['brakeman'],
+\}
 
-function! SyntaxItem()
-  return synIDattr(synID(line("."),col("."),1),"name")
-endfunction
+" Configure netrw to behave mostly like NERDTree
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
 
-function! StatusLine(current, width)
-    let l:s = ''
-
-    if a:current
-      let l:s .= crystalline#mode() . crystalline#right_mode_sep('')
-    else
-      let l:s .= '%#CrystallineInactive#'
-    endif
-    let l:s .= ' %f%h%w%m%r '
-    if a:current
-      let l:s .= crystalline#right_sep('', 'Fill') . '%{fugitive#head()}'
-    endif
-
-    let l:s .= '%='
-    if a:current
-      let l:s .= crystalline#left_sep('', 'Fill') . ' %{&paste ?"PASTE ":""}%{&spell?"SPELL ":""}'
-      let l:s .= crystalline#left_mode_sep('')
-    endif
-    if a:width > 80
-      let l:s .= ' %{&ft}[%{&enc}][%{&ffs}] %-14.(%l/%L %c%V%) %P%( %{MyALEStautsLine()}% '
-    else
-      let l:s .= ' '
-    endif
-
-    return l:s
-endfunction
-
-function! TabLine()
-    let l:vimlabel = has("nvim") ?  " NVIM " : " VIM "
-    return crystalline#bufferline(2, len(l:vimlabel), 1) . '%=%#CrystallineTab# ' . l:vimlabel
-endfunction
-
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_tabline_fn = 'TabLine'
-let g:crystalline_theme = 'papercolor'
-let g:crystalline_enable_sep = 1
-let g:crystalline_separators = ['»', '«']
-
-call plug#begin('~/.vim_plugins')
-" Color scheme
-Plug 'Nequo/vim-allomancer'
-Plug 'andreypopp/vim-colors-plain'
-Plug 'ayu-theme/ayu-vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'evansb/vim-colors-pencil'
-Plug 'rakr/vim-one'
-Plug 'rakr/vim-two-firewatch'
-Plug 'sonph/onehalf', { 'rtp': 'vim/' }
-Plug 'tomasr/molokai'
-Plug 'owickstrom/vim-colors-paramount'
-
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-eunuch'
-
-" Status line
-Plug 'rbong/vim-crystalline'
-
-" Easy way to align by a separator (for example with tomdocs)
-Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
-
-" A solid language pack (a collection of language packs)
-Plug 'sheerun/vim-polyglot'
-
-" Fuzzy finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
-Plug 'junegunn/fzf.vim'
-
-" A bunch of Tim Pope plugins to make using vim easier
-Plug 'tpope/vim-characterize'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat' | Plug 'tpope/vim-abolish' | Plug 'tpope/vim-surround' | Plug 'tpope/vim-unimpaired' | Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch' | Plug 'radenling/vim-dispatch-neovim' | Plug 'kassio/neoterm' | Plug 'janko-m/vim-test'
-Plug 'tpope/vim-fugitive' | Plug 'tommcdo/vim-fubitive'
-
-" Better git commit editing.
-Plug 'rhysd/committia.vim'
-
-" ... and show git changes.
-Plug 'airblade/vim-gitgutter'
-
-" ... full blown git diffing and staging
-Plug 'jreybert/vimagit'
-
-" Ruby
-" Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
-
-" Asynchronous completion framework
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-endif
-
-" Adds various text objects to give you more targets to operate on
-Plug 'wellle/targets.vim'
-
-" Async linting engine
-Plug 'w0rp/ale'
-
-" Add the `Bdelete` command.
-Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
-
-" Making VIM a writing environment
-Plug 'dbmrq/vim-ditto'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } | Plug 'junegunn/limelight.vim'
-Plug 'reedes/vim-pencil'
-Plug 'reedes/vim-textobj-quote'
-Plug 'reedes/vim-textobj-sentence'
-Plug 'reedes/vim-wordy'
-Plug 'reedes/vim-lexical'
-Plug 'reedes/vim-litecorrect'
-
-" Lisp editing
-Plug 'eraserhd/parinfer-rust', { 'do': 'cargo build --release', 'for': 'clojure' }
-
-" Clojure REPL
-Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile', 'for': 'clojure' }
-call plug#end()
-
-let mapleader="\<Space>"
-
-" Modify the defaults to better match my usage
-set autoread
-set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set cursorline
 set expandtab
 set grepprg=rg\ --vimgrep\ $*
 set hidden
-set history=10000
-set hlsearch
-set laststatus=2
 set list
 set listchars=tab:▸\ ,trail:·,extends:>,precedes:<
-set noautowrite                         " don't automagically write on :next
-set nobackup
-set noswapfile
-set scrolloff=3
-set shiftwidth=4
 set showbreak=↪
-set showmatch
-set softtabstop=4
-set nosplitright
-set statusline=%!StatusLine()
-set switchbuf=useopen
-set tabstop=4
-set wildmode=longest,list
-set winheight=5
-set winminheight=5
-set winwidth=80
-
-" Set the default font for GUI applications
-set guifont=IBM\ Plex\ Mono\ Text:h19
+set spelllang=en_ca
+set tabstop=4 softtabstop=4 shiftwidth=4
+set winwidth=83 " Give enough space for the gutter
 
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
-
-" Fix slow O inserts
-set timeout timeoutlen=1000 ttimeoutlen=100
-
-set updatetime=250
 
 " Ignore a bunch of VCS, swap, and backup files.
 set wildignore+=*.swp,*.bak
@@ -224,67 +164,11 @@ set wildignore+=.hg,.git,.svn
 set wildignore+=*.spl
 set wildignore+=*.sw?
 
-" Use the old vim regex engine (version 1, as opposed to version 2, which was
-" introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
-" slower with the new regex engine.
-" set re=1
-
-" Enable Neovim specific settings
-if has('nvim')
-    set inccommand=nosplit
-else
-    set viminfo=
-end
-
-augroup vimrcEx
-    autocmd!
-
-    autocmd FileType ruby,eruby,rspec setlocal shiftwidth=2 tabstop=2
-    autocmd FileType c setlocal shiftwidth=8
-    autocmd FileType python setlocal noexpandtab
-
-    " Enable breakindent for text files only
-    autocmd FileType markdown,text,gitcommit setlocal breakindent
-
-    " Enable ditto for text like filetypes
-    autocmd CursorHold,CursorHoldI markdown,text,gitcommit DittoUpdate
-
-    " Toggle Limelight when entering/leaving Goyo
-    autocmd! User GoyoEnter Limelight
-    autocmd! User GoyoLeave Limelight!
-
-    " Disable the numbers in the terminal
-    au TermOpen * setlocal nonumber norelativenumber
-
-    " Only show the cursor line in the window with focus.
-    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    autocmd WinLeave * setlocal nocursorline
-augroup END
-
-" ------------------------------------------------------------------------
-" Mappings
-" ------------------------------------------------------------------------
-
-" Disable arrow keys in normal and insert mode.  Need to train myself not use
-" them.
-
-" Disable Arrow keys in Escape mode
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-
-" Disable Arrow keys in Insert mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+" Turn click-me warnings about swapfiles into discreet little messages
+set shortmess+=A
 
 " Quit everything!
 nmap QA :qa!<cr>
-
-" Don't move on *
-" nnoremap * *<c-o>
 
 " switch to using Perl standard regular expressions
 nnoremap / /\v
@@ -339,34 +223,44 @@ nnoremap <silent> <leader>c :nohlsearch<cr>
 " Shortcode to reference current file's path in command line mode.
 cnoremap <expr> %% expand('%:h').'/'
 
-" ------------------------------------------------------------------------
-" Configure Plugins
-" ------------------------------------------------------------------------
-call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
+let &background=filter([readfile(expand("$HOME/CloudStation/current_background_mode"))[0], 'light'], '!empty(v:val)')[0]
 
 " Enable 24bit colors if we're not SSH'd into a remote server.
 if empty($SSH_CLIENT)
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
+
+    " if &background ==? "light"
+    "     colorscheme antiphoton
+    " else
+    "     colorscheme photon
+    " endif
+
+    let g:one_allow_italics = 1
+    colorscheme one
+
+    " call one#highlight('rubyComment', '', '', 'bold,italic')
+
+    if &background ==? "light"
+        call one#highlight('Todo', 'a626a4', 'fafafa', 'bold')
+        call one#highlight('rubyBlockParameter', '4078f2', '', 'none')
+        call one#highlight('rubyBlockParameterList', '4078f2', '', 'none')
+    endif
 else
     set t_Co=256
+    colorscheme paramount
 endif
 
-let &background=filter([readfile(expand("$HOME/CloudStation/current_background_mode"))[0], 'light'], '!empty(v:val)')[0]
-
-colorscheme paramount
-
 if &background ==? "light"
-    let ayucolor="light"
-    " colorscheme plain
     highlight! CursorColumn ctermbg=255 guibg=#e0f5ff
     highlight! CursorLine ctermbg=255 guibg=#e0f5ff
     highlight! Visual ctermbg=7 guibg=#ffe0e0
+    highlight! ColorColumn guibg=#f9f7f7
 else
-    " colorscheme palenight
     highlight! CursorColumn ctermbg=0 guibg=#1d2026
     highlight! CursorLine ctermbg=0 guibg=#1d2026
+    highlight! ColorColumn guibg=#332727
 endif
 
 highlight! link Define Statement
@@ -377,10 +271,16 @@ hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=un
 " Enable italics for comments
 highlight Comment cterm=italic gui=italic
 
+highlight link ALEWarningSign SpellLocal
+highlight link ALEErrorSign SpellBad
+highlight link ALEWarning SpellBad
+
 " Fuzzy finder
 set rtp+=~/.fzf
-nmap <leader>t :Files<cr>
-nmap <leader>j :Buffers<cr>
+" nmap <leader>t :Files<cr>
+" nmap <leader>j :Buffers<cr>
+nmap <leader>t <cmd>Telescope find_files<cr>
+nmap <leader>j <cmd>Telescope buffers<cr>
 
 " Test runner
 nnoremap <silent> <leader>sf :TestFile<cr>
@@ -392,19 +292,20 @@ nmap <leader>ga <Plug>(GitGutterStageHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gp <Plug>(GitGutterPrevHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
-nnoremap <leader>gaf :Gwrite<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gci :Gcommit<cr>
+nnoremap <leader>gb :Git blame<cr>
+nnoremap <leader>gci :Git commit<cr>
 nnoremap <leader>gco :Gcheckout<cr>
-nnoremap <leader>gd :Gvdiff<CR>
+nnoremap <leader>gd :Gvdiffsplit<CR>
 nnoremap <leader>gg :grep<space>
 nnoremap <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
-nnoremap <leader>gm :Gmove<cr>
-nnoremap <leader>gr :Gremove<cr>
-nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gm :GMove<cr>
+nnoremap <leader>gr :GRemove<cr>
+nnoremap <leader>gs :Git<cr>
 nnoremap <leader>gw :Gwrite<cr>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
+
+nnoremap <LocalLeader>l :ALELint<return>
 
 augroup ft_fugitive
     au!
@@ -412,40 +313,16 @@ augroup ft_fugitive
     au BufNewFile,BufRead .git/index setlocal nolist
 augroup END
 
-highlight link ALEWarningSign SpellLocal
-highlight link ALEErrorSign SpellBad
-highlight link ALEWarning SpellBad
+augroup vimrcEx
+    autocmd!
 
-function! Prose()
-  call pencil#init({'wrap': 'soft'})
-  call lexical#init()
-  call litecorrect#init()
-  call textobj#quote#init()
-  call textobj#sentence#init()
+    " Enable breakindent for text files only
+    autocmd FileType markdown,text,gitcommit setlocal breakindent
 
-  " manual reformatting shortcuts
-  nnoremap <buffer> <silent> Q gqap
-  xnoremap <buffer> <silent> Q gq
-  nnoremap <buffer> <silent> <leader>Q vapJgqap
+    " Disable the numbers in the terminal
+    au TermOpen * setlocal nonumber norelativenumber
 
-  " force top correction on most recent misspelling
-  nnoremap <buffer> <c-s> [s1z=<c-o>
-  inoremap <buffer> <c-s> <c-g>u<Esc>[s1z=`]A<c-g>u
-
-  " replace common punctuation
-  iabbrev <buffer> -- –
-  iabbrev <buffer> --- —
-  iabbrev <buffer> << «
-  iabbrev <buffer> >> »
-
-  " replace typographical quotes (reedes/vim-textobj-quote)
-  map <silent> <buffer> <leader>qc <Plug>ReplaceWithCurly
-  map <silent> <buffer> <leader>qs <Plug>ReplaceWithStraight
-
-  " highlight words (reedes/vim-wordy)
-  noremap <silent> <buffer> <F8> :<C-u>NextWordy<cr>
-  xnoremap <silent> <buffer> <F8> :<C-u>NextWordy<cr>
-  inoremap <silent> <buffer> <F8> <C-o>:NextWordy<cr>
-endfunction
-
-command! -nargs=0 Prose call Prose()
+    " Only show the cursor line in the window with focus.
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
