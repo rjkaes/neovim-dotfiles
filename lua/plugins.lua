@@ -68,10 +68,11 @@ local function init()
 
     -- Git
     use {
-      { 'tpope/vim-fugitive', cmd = { 'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull' } },
+      { 'tpope/vim-fugitive', cmd = { 'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gcheckout', 'Gvdiffsplit', 'Gmove', 'Gremove', 'Gwrite' } },
       {
         'lewis6991/gitsigns.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
+        config = [[require('config.gitsigns')]],
       },
     }
 
@@ -104,17 +105,6 @@ require('telescope').setup {
     }
 }
 require('telescope').load_extension('fzf');
-
--- Load up gitsigns
-require('gitsigns').setup {
-    signs = {
-        add          = {hl = 'GitSignsAdd'   , text = '+', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-        change       = {hl = 'GitSignsChange', text = '!', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-        delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-        topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-        changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    },
-}
 
 -- Initialize indent blanklines
 require("indent_blankline").setup {
