@@ -9,14 +9,66 @@ let g:loaded_gzip              = 1
 let g:loaded_zipPlugin         = 1
 let g:loaded_2html_plugin      = 1
 let g:loaded_shada_plugin      = 1
-" let g:loaded_spellfile_plugin  = 1
-" let g:loaded_netrw             = 1
-" let g:loaded_netrwPlugin       = 1
 let g:loaded_tutor_mode_plugin = 1
-let g:loaded_remote_plugins    = 1
 
-" Load custom plugins and initialize them
-lua require('plugins')
+call plug#begin('~/.vim_plugins')
+" Color scheme
+" Plug 'evansb/vim-colors-pencil'
+Plug 'owickstrom/vim-colors-paramount'
+Plug 'rakr/vim-one'
+" Plug 'rakr/vim-two-firewatch'
+" Plug 'sainnhe/sonokai'
+" Plug 'axvr/photon.vim'
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'voldikss/vim-floaterm'
+
+" Replace matchit.vim and matchparen
+Plug 'andymass/vim-matchup'
+
+" Fuzzy finder
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+" Plug 'junegunn/fzf.vim'
+
+" Telescope (fuzzy finder)
+Plug 'nvim-telescope/telescope.nvim' | Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+" A bunch of Tim Pope plugins to make using vim easier
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat' | Plug 'tpope/vim-abolish' | Plug 'tpope/vim-surround' | Plug 'tpope/vim-unimpaired' | Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch' | Plug 'radenling/vim-dispatch-neovim' | Plug 'kassio/neoterm' | Plug 'janko-m/vim-test'
+Plug 'tpope/vim-fugitive' | Plug 'tommcdo/vim-fubitive'
+Plug 'lewis6991/gitsigns.nvim'
+
+" Async linting engine
+Plug 'dense-analysis/ale'
+
+" Ruby
+Plug 'jlcrochet/vim-ruby', { 'for': 'ruby' } | Plug 'tpope/vim-rails', { 'for': 'ruby' } | Plug 'ruby-formatter/rufo-vim', { 'for': 'ruby' }
+Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+
+" " Python
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+
+" " Treesitter for syntax highlighting, etc.
+" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } | Plug 'romgrk/nvim-treesitter-context'
+
+" Show indentation
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+
+Plug 'cweagans/vim-taskpaper'
+
+" LISP editing
+Plug 'kovisoft/slimv'
+call plug#end()
+
+lua require('config')
 
 let mapleader="\<Space>"
 let maplocalleader=","
