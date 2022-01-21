@@ -51,8 +51,8 @@ Plug 'dense-analysis/ale'
 Plug 'rjkaes/vim-ruby', { 'for': 'ruby' } | Plug 'tpope/vim-rails', { 'for': 'ruby' } | Plug 'ruby-formatter/rufo-vim', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 
-" " Python
-" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+" Python
+Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }
 
 " " Treesitter for syntax highlighting, etc.
 " Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } | Plug 'romgrk/nvim-treesitter-context'
