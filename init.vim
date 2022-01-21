@@ -65,7 +65,7 @@ Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'cweagans/vim-taskpaper'
 
 " LISP editing
-Plug 'kovisoft/slimv'
+Plug 'kovisoft/slimv', { 'for': ['lisp', 'clojure'] }
 call plug#end()
 
 lua require('config')
