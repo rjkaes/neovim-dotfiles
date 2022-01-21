@@ -62,13 +62,11 @@ local function init()
     use 'janko-m/vim-test'
     use 'tommcdo/vim-fubitive'
 
-    -- A solid language pack (a collection of language packs)
-    use 'sheerun/vim-polyglot'
-
     -- Async linting engine
     use 'dense-analysis/ale'
 
     -- -- Ruby
+    use { 'jlcrochet/vim-ruby', opt=true, ft={'ruby', 'rspec'} }
     use { 'ruby-formatter/rufo-vim', opt=true, ft={'ruby', 'rspec'} }
     use { 'tpope/vim-rails', opt=true, ft={'ruby', 'rspec'} }
     use { 'kana/vim-textobj-user', opt=true, ft={'ruby', 'rspec'} }
