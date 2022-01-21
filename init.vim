@@ -48,7 +48,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'dense-analysis/ale'
 
 " Ruby
-Plug 'jlcrochet/vim-ruby', { 'for': 'ruby' } | Plug 'tpope/vim-rails', { 'for': 'ruby' } | Plug 'ruby-formatter/rufo-vim', { 'for': 'ruby' }
+Plug 'rjkaes/vim-ruby', { 'for': 'ruby' } | Plug 'tpope/vim-rails', { 'for': 'ruby' } | Plug 'ruby-formatter/rufo-vim', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 
 " " Python
