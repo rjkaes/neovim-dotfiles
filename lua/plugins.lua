@@ -82,13 +82,11 @@ local function init()
     use 'lukas-reineke/indent-blankline.nvim'
 
     -- Git
+    use 'tpope/vim-fugitive'
     use {
-      { 'tpope/vim-fugitive', cmd = { 'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull', 'Gcheckout', 'Gvdiffsplit', 'Gmove', 'Gremove', 'Gwrite' } },
-      {
         'lewis6991/gitsigns.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
         config = [[require('config.gitsigns')]],
-      },
     }
 
     use { 'ms-jpq/coq_nvim', branch='coq' }
