@@ -25,11 +25,26 @@ local function init()
     use 'andymass/vim-matchup'
 
     -- -- Telescope (fuzzy finder)
-    use 'voldikss/vim-floaterm'
-    use 'nvim-lua/plenary.nvim'
-    use { 'nvim-lua/popup.nvim', requires= { 'nvim-lua/plenary.nvim' } }
-    use 'nvim-telescope/telescope.nvim'
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run="make" }
+    use {
+        {
+            'nvim-telescope/telescope.nvim',
+            requires = {
+                'nvim-lua/popup.nvim',
+                'nvim-lua/plenary.nvim',
+                'telescope-fzf-native.nvim',
+            },
+            wants = {
+                'popup.nvim',
+                'plenary.nvim',
+                'telescope-fzf-native.nvim',
+            },
+            config = [[require('config.telescope')]],
+        },
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            run = 'make',
+        },
+    }
 
     -- -- A bunch of Tim Pope plugins to make using vim easier
     use 'tpope/vim-sensible'
@@ -92,19 +107,6 @@ vim.cmd([[
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
   augroup end
 ]])
-
--- -- Initialize telescope
-require('telescope').setup {
-    extensions = {
-        fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
-        }
-    }
-}
-require('telescope').load_extension('fzf');
 
 -- Initialize indent blanklines
 require("indent_blankline").setup {
