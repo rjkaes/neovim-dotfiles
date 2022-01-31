@@ -11,6 +11,89 @@ let g:loaded_2html_plugin      = 1
 let g:loaded_shada_plugin      = 1
 let g:loaded_tutor_mode_plugin = 1
 
+" ALE
+set omnifunc=ale#completion#OmniFunc
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
+
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_delay = 2000
+
+" use nice symbols for errors and warnings
+let g:ale_set_highlights = 1
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+
+" fixer configurations
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'rust': ['rustfmt'],
+\}
+
+let g:ale_rust_rls_config = {
+\   'rust': {
+\       'clippy_preferece': 'on'
+\   }
+\}
+
+let g:ale_ruby_rubocop_executable = 'rubocop'
+let g:ale_ruby_rubocop_options='-c ~/.rubocop.yml'
+
+" Disable brakeman linter
+let g:ale_linters_ignore = {
+\   'ruby': ['brakeman'],
+\}
+
+let mapleader="\<Space>"
+let maplocalleader=","
+
+let g:ruby_host_prog = expand('$HOME/.rubies/ruby-2.6.6/bin/ruby')
+let g:ruby_path = g:ruby_host_prog
+
+let g:test#preserve_screen = 1
+let test#strategy = 'dispatch'
+"let g:dispatch_compilers = { 'bundle exec': '' }
+
+" Configure netrw to behave mostly like NERDTree
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
+let &background=filter([readfile(expand("$HOME/CloudStation/current_background_mode"))[0], 'light'], '!empty(v:val)')[0]
+
+set completeopt=menu,menuone,preview,noselect,noinsert
+set cursorline
+set expandtab
+set grepprg=rg\ --vimgrep\ $*
+set hidden
+set list
+set listchars=tab:▸\ ,trail:·,extends:>,precedes:<
+set rtp+=~/.fzf
+set showbreak=↪
+set spelllang=en_ca
+set tabstop=4 softtabstop=4 shiftwidth=4
+set tags+=.git/tags
+set winwidth=83 " Give enough space for the gutter
+
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
+
+" Ignore a bunch of VCS, swap, and backup files.
+set wildignore+=*.swp,*.bak
+set wildignore+=.hg,.git,.svn
+set wildignore+=*.spl
+set wildignore+=*.sw?
+
+" Turn click-me warnings about swapfiles into discreet little messages
+set shortmess+=A
+
+" Load plugins
 call plug#begin('~/.vim_plugins')
 " Color scheme
 " Plug 'evansb/vim-colors-pencil'
@@ -70,74 +153,6 @@ call plug#end()
 
 lua require('config')
 
-let mapleader="\<Space>"
-let maplocalleader=","
-
-let g:ruby_host_prog = expand('$HOME/.rubies/ruby-2.6.6/bin/ruby')
-let g:ruby_path = g:ruby_host_prog
-
-let g:test#preserve_screen = 1
-let test#strategy = 'dispatch'
-"let g:dispatch_compilers = { 'bundle exec': '' }
-
-" Auto-linting
-let g:ale_ruby_rubocop_executable = 'rubocop'
-let g:ale_ruby_rubocop_options='-c ~/.rubocop.yml'
-
-" fix files on save
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_delay = 2000
-
-" use nice symbols for errors and warnings
-let g:ale_set_highlights = 1
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚠'
-
-" fixer configurations
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\}
-
-" Disable brakeman linter
-let g:ale_linters_ignore = {
-\   'ruby': ['brakeman'],
-\}
-
-" Configure netrw to behave mostly like NERDTree
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-
-set cursorline
-set expandtab
-set grepprg=rg\ --vimgrep\ $*
-set hidden
-set list
-set listchars=tab:▸\ ,trail:·,extends:>,precedes:<
-set showbreak=↪
-set spelllang=en_ca
-set tabstop=4 softtabstop=4 shiftwidth=4
-set tags+=.git/tags
-set winwidth=83 " Give enough space for the gutter
-
-" make searches case-sensitive only if they contain upper-case characters
-set ignorecase smartcase
-
-" Ignore a bunch of VCS, swap, and backup files.
-set wildignore+=*.swp,*.bak
-set wildignore+=.hg,.git,.svn
-set wildignore+=*.spl
-set wildignore+=*.sw?
-
-" Turn click-me warnings about swapfiles into discreet little messages
-set shortmess+=A
-
 " Quit everything!
 nmap QA :qa!<cr>
 
@@ -194,8 +209,6 @@ nnoremap <silent> <leader>c :nohlsearch<cr>
 " Shortcode to reference current file's path in command line mode.
 cnoremap <expr> %% expand('%:h').'/'
 
-let &background=filter([readfile(expand("$HOME/CloudStation/current_background_mode"))[0], 'light'], '!empty(v:val)')[0]
-
 " Enable 24bit colors if we're not SSH'd into a remote server.
 if empty($SSH_CLIENT)
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -247,7 +260,6 @@ highlight link ALEErrorSign SpellBad
 highlight link ALEWarning SpellBad
 
 " Fuzzy finder
-set rtp+=~/.fzf
 nmap <leader>t <cmd>Telescope find_files<cr>
 nmap <leader>j <cmd>Telescope buffers<cr>
 nmap <leader>c <cmd>Telescope tags<cr>
@@ -295,3 +307,17 @@ augroup vimrcEx
     " Make TODO files taskpaper files
     autocmd BufNewFile,BufRead TODO set filetype=taskpaper
 augroup END
+
+function! SmartInsertCompletion() abort
+    " Use the default CTRL-N in completion menus
+    if pumvisible()
+        return "\<C-n>"
+    endif
+
+    " Exit and re-enter insert mode, and use insert completion
+    return "\<C-c>a\<C-n>"
+endfunction
+
+" Handle autocompletion with Omni Complete
+inoremap <silent> <C-n> <C-R>=SmartInsertCompletion()<CR>
+inoremap <silent> <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
