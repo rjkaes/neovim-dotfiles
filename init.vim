@@ -103,6 +103,10 @@ Plug 'rakr/vim-one'
 " Plug 'sainnhe/sonokai'
 " Plug 'axvr/photon.vim'
 
+" Status line
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'voldikss/vim-floaterm'

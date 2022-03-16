@@ -1,3 +1,10 @@
+-- Setup status line
+require('lualine').setup({
+    options = {
+        theme = 'onedark',
+    },
+})
+
 require("indent_blankline").setup {
     show_first_indent_level = false,
     space_char_blankline = " ",
