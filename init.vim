@@ -31,6 +31,7 @@ let g:ale_sign_warning = '⚠'
 " fixer configurations
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'crystal': ['crystal-tool-format'],
 \   'rust': ['rustfmt'],
 \}
 
@@ -48,6 +49,7 @@ let g:ale_linters_ignore = {
 \   'ruby': ['brakeman'],
 \}
 
+\   'crystal': ['crystal', 'ameba'],
 let mapleader="\<Space>"
 let maplocalleader=","
 
@@ -137,6 +139,9 @@ Plug 'dense-analysis/ale'
 " Ruby
 Plug 'rjkaes/vim-ruby', { 'for': 'ruby' } | Plug 'tpope/vim-rails', { 'for': 'ruby' } | Plug 'ruby-formatter/rufo-vim', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+
+" Crystal
+Plug 'vim-crystal/vim-crystal'
 
 " Python
 Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }
