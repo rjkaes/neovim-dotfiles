@@ -5,7 +5,7 @@ setlocal textwidth=72
 nmap <buffer> <silent> <leader>r :call <SID>RemoveReplyLines()<CR>
 
 " Insert my signature
-iabb rjk Thanks.<cr><space><space><space><space>--rjk<cr><esc>
+inoreabbr <buffer> rjk Thanks.<cr><space><space><space><space>--rjk<cr><esc>
 
 function s:RemoveReplyLines()
     .,/^--/-2d
