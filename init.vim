@@ -16,7 +16,12 @@ let g:loaded_shada_plugin      = 1
 let g:loaded_tutor_mode_plugin = 1
 
 " ALE
+"
+" Show diagnostics as virtual text inline and NOT echoed in the command area.
 let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '« '
+let g:ale_echo_cursor = 0
+
 let g:ale_completion_autoimport = 1
 let g:ale_completion_delay = 200
 let g:ale_completion_enabled = 1
@@ -367,6 +372,10 @@ else
     highlight! CursorColumn ctermbg=0 guibg=#1d2026
     highlight! CursorLine ctermbg=0 guibg=#1d2026
     highlight! ColorColumn guibg=#332727
+
+    highlight! ALEVirtualTextError guifg=#e06c75
+    highlight! ALEVirtualTextWarning guifg=#e5c07b
+    highlight! ALEVirtualTextInfo guifg=#98c379
 endif
 
 highlight! link Define Statement
