@@ -128,6 +128,7 @@ let g:semshi#always_update_all_highlights = v:true
 set completeopt=menu,menuone,noselect,noinsert
 set cursorline
 set expandtab
+set nofoldenable
 set grepprg=rg\ --vimgrep\ $*
 set hidden
 set list
@@ -435,3 +436,8 @@ function! SmartInsertCompletion() abort
 endfunction
 inoremap <silent> <TAB> <C-R>=SmartInsertCompletion()<CR>
 set omnifunc=ale#completion#OmniFunc
+
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
