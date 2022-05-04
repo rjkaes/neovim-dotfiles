@@ -191,9 +191,9 @@ Plug 'nvim-telescope/telescope.nvim' | Plug 'nvim-telescope/telescope-fzf-native
 
 " A bunch of Tim Pope plugins to make using vim easier
 Plug 'tpope/vim-sensible'
-" Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-characterize'
-" Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat' | Plug 'tpope/vim-abolish' | Plug 'tpope/vim-surround' | Plug 'tpope/vim-unimpaired' | Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch' | Plug 'radenling/vim-dispatch-neovim' | Plug 'kassio/neoterm' | Plug 'janko-m/vim-test'
 Plug 'tpope/vim-fugitive' | Plug 'tommcdo/vim-fubitive'
