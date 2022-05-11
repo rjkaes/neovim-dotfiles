@@ -10,6 +10,7 @@ Abolish -buffer env environment
 Abolish -buffer hes he's
 Abolish -buffer im I'm
 Abolish -buffer isnt isn't
+Abolish -buffer shoudnt shouldn't
 Abolish -buffer teh the
 Abolish -buffer thats that's
 Abolish -buffer togr together
