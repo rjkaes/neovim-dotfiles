@@ -213,6 +213,9 @@ Plug 'rhysd/vim-lsp-ale'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 
+" Use the project's settings if a `.editorconfig` file is defined.
+Plug 'editorconfig/editorconfig-vim'
+
 " C++
 Plug 'bfrg/vim-cpp-modern'
 
