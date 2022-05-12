@@ -372,6 +372,10 @@ if &background ==? "light"
     highlight! CursorLine ctermbg=255 guibg=#e0f5ff
     highlight! Visual ctermbg=7 guibg=#ffe0e0
     highlight! ColorColumn guibg=#f9f7f7
+
+    highlight! ALEVirtualTextError guifg=#d32c39
+    highlight! ALEVirtualTextWarning guifg=#d99a26
+    highlight! ALEVirtualTextInfo guifg=#6c9f47
 else
     highlight! CursorColumn ctermbg=0 guibg=#1d2026
     highlight! CursorLine ctermbg=0 guibg=#1d2026
