@@ -281,7 +281,7 @@ nnoremap <silent> <leader>l :call <SID>ToggleWindow("loclist")<cr>
 nnoremap <silent> <leader>8 :nohlsearch<cr>
 
 " Fuzzy finder
-nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader><tab> <cmd>Telescope find_files<cr>
 nnoremap <leader>j <cmd>Telescope buffers<cr>
 nnoremap <leader>c <cmd>Telescope tags<cr>
 
