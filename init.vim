@@ -210,12 +210,14 @@ Plug 'dense-analysis/ale'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'rhysd/vim-lsp-ale'
 
-" " Semantic language support
+" Semantic language support
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 
 " Use the project's settings if a `.editorconfig` file is defined.
 Plug 'editorconfig/editorconfig-vim'
+
+Plug 'cweagans/vim-taskpaper'
 
 " C++
 Plug 'bfrg/vim-cpp-modern'
@@ -233,9 +235,6 @@ Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': '
 " Rust
 Plug 'rust-lang/rust.vim'
 
-" Slim
-Plug 'slim-template/vim-slim'
-
 " " Treesitter for syntax highlighting, etc.
 " Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } | Plug 'romgrk/nvim-treesitter-context'
 
@@ -243,11 +242,6 @@ Plug 'slim-template/vim-slim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-
-Plug 'cweagans/vim-taskpaper'
-
-" LISP editing
-Plug 'kovisoft/slimv', { 'for': ['lisp', 'clojure'] }
 call plug#end()
 
 lua require('config')
