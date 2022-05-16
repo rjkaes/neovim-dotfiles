@@ -134,6 +134,7 @@ set hidden
 set list
 set listchars=tab:▸\ ,nbsp:¬,extends:»,precedes:«,trail:•
 set rtp+=~/.fzf
+set signcolumn=yes
 set showbreak=↪
 set spelllang=en_ca
 set tabstop=4 softtabstop=4 shiftwidth=4
