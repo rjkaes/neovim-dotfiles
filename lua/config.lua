@@ -155,3 +155,9 @@ local on_attach = function(client, bufnr)
         },
     })
 end
+
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.diagnostics.vale,
+    },
+})

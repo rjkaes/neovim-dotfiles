@@ -211,6 +211,8 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'rhysd/vim-lsp-ale'
 
 " Semantic language support
+Plug 'folke/lsp-colors.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 
