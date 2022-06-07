@@ -202,6 +202,9 @@ Plug 'tpope/vim-fugitive' | Plug 'tommcdo/vim-fubitive'
 " Tabular
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 
+" Distraction free writing
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+
 Plug 'TimUntersberger/neogit'
 Plug 'lewis6991/gitsigns.nvim'
 
