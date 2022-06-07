@@ -268,7 +268,7 @@ nnoremap <c-l> <c-w>l
 nnoremap <silent> <leader>o :split TODO<cr>
 
 " toggle between last two buffers (normally ctrl-shift-6)
-nnoremap <silent> <leader><leader> <c-^>
+nnoremap <silent> <leader><tab> <c-^>
 
 " Quickly write the file
 nnoremap <silent> <leader>w :w<CR>
@@ -280,15 +280,15 @@ nnoremap <silent> <leader>l :call <SID>ToggleWindow("loclist")<cr>
 nnoremap <silent> <leader>8 :nohlsearch<cr>
 
 " Fuzzy finder
-nnoremap <leader><tab> <cmd>Telescope find_files<cr>
+nnoremap <leader><leader> <cmd>Telescope find_files<cr>
 nnoremap <leader>j <cmd>Telescope buffers<cr>
 nnoremap <leader>c <cmd>Telescope tags<cr>
 
 " Test runner
-nnoremap <silent> <leader>sf :TestFile<cr>
-nnoremap <silent> <leader>so :TestNearest<cr>
-nnoremap <silent> <leader>sa :TestSuite<cr>
-nnoremap <silent> <leader>ss :TestLast<cr>
+nnoremap <silent> <leader>sf <cmd>TestFile<cr>
+nnoremap <silent> <leader>so <cmd>TestNearest<cr>
+nnoremap <silent> <leader>sa <cmd>TestSuite<cr>
+nnoremap <silent> <leader>ss <cmd>TestLast<cr>
 
 nnoremap <leader>gb :Git blame<cr>
 nnoremap <leader>gci :Neogit kind=split_above<cr>
