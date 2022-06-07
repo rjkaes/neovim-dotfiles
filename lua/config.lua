@@ -1,3 +1,5 @@
+require('lsp')
+
 -- Setup status line
 require('lualine').setup({
     options = {
@@ -11,7 +13,7 @@ require('lualine').setup({
             'diff',
             {
                 'diagnostics',
-                sources = { 'ale' },
+                sources = { 'nvim_lsp', 'nvim_diagnostic' },
                 colored = false,
             },
         },
@@ -106,58 +108,7 @@ require("toggleterm").setup{
 
 require('neogit').setup {}
 
--- Setup lspconfig.
-local lspconfig = require'lspconfig'
-local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    --Enable completion triggered by <c-x><c-o>
-    -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    -- local opts = { noremap=true, silent=true }
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    -- buf_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    -- buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
-    -- buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
-    -- Use a loop to conveniently call 'setup' on multiple servers and
-    -- map buffer local keybindings when the language server attaches
-    local servers = { 'rust_analyzer' }
-    for _, lsp in pairs(servers) do
-        require('lspconfig')[lsp].setup {
-            on_attach = on_attach,
-            flags = {
-                -- This will be the default in neovim 0.7+
-                debounce_text_changes = 150,
-            }
-        }
-    end
-
-    -- Get signatures (and _only_ signatures) when in argument lists.
-    require "lsp_signature".on_attach({
-        doc_lines = 0,
-        handler_opts = {
-            border = "none"
-        },
-    })
-end
-
-require("null-ls").setup({
-    sources = {
-        require("null-ls").builtins.diagnostics.vale,
-    },
-})
+require 'trouble'.setup({})
+vim.api.nvim_set_keymap("n", "<leader>x", "<cmd>TroubleToggle<cr>",
+  {silent = true, noremap = true}
+)

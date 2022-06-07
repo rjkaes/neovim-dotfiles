@@ -9,14 +9,3 @@ setlocal errorformat+=%C%.%#Expected:\ %m
 setlocal errorformat+=%C%.%#got:\ %m
 setlocal errorformat+=%C%.%#
 setlocal makeprg=crystal\ spec\ --no-color\ %
-
-function! FormatCrystal(buffer) abort
-    return {
-    \    'command': 'crystal tool format --no-color - 2>/dev/null'
-    \}
-endfunction
-
-execute ale#fix#registry#Add('crystal-tool-format', 'FormatCrystal', ['crystal'], 'crystal tool format')
-
-" ameba is installed globably
-call ale#Set('crystal_ameba_executable', 'ameba')

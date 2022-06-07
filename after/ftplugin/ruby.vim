@@ -31,15 +31,3 @@ nnoremap <buffer> <silent> <localleader>s V(:'<,'>!sort<cr>
 " Visually select a block
 nmap <buffer> <silent> <localleader>a var
 nmap <buffer> <silent> <localleader>i vir
-
-function! FormatRubyWithRubocop(buffer) abort
-    let l:executable = ale#Var(a:buffer, 'ruby_rubocop_executable')
-
-    let command = ale#ruby#EscapeExecutable(l:executable, 'rubocop')
-                \ . ' --fix-layout --stderr '
-                \ . ale#Var(a:buffer, 'ruby_rubocop_options')
-                \ . ' --stdin %s'
-    return { 'command': command, }
-endfunction
-
-execute ale#fix#registry#Add('rubocop-format', 'FormatRubyWithRubocop', ['ruby'], 'rubocop layout fixes')

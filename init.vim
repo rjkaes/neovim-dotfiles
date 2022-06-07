@@ -15,84 +15,6 @@ let g:loaded_2html_plugin      = 1
 let g:loaded_shada_plugin      = 1
 let g:loaded_tutor_mode_plugin = 1
 
-" ALE
-"
-" Show diagnostics as virtual text inline and NOT echoed in the command area.
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '« '
-let g:ale_echo_cursor = 0
-
-let g:ale_completion_autoimport = 1
-let g:ale_completion_delay = 200
-let g:ale_completion_enabled = 1
-let g:ale_completion_symbols = {
-\ 'text': '',
-\ 'method': '',
-\ 'function': '',
-\ 'constructor': '',
-\ 'field': '',
-\ 'variable': '',
-\ 'class': '',
-\ 'interface': '',
-\ 'module': '',
-\ 'property': '',
-\ 'unit': 'unit',
-\ 'value': 'val',
-\ 'enum': '',
-\ 'keyword': 'keyword',
-\ 'snippet': '',
-\ 'color': 'color',
-\ 'file': '',
-\ 'reference': 'ref',
-\ 'folder': '',
-\ 'enum member': '',
-\ 'constant': '',
-\ 'struct': '',
-\ 'event': 'event',
-\ 'operator': '',
-\ 'type_parameter': 'type param',
-\ '<default>': 'v'
-\ }
-
-let g:ale_fix_on_save = 1
-let g:ale_keep_list_window_open = 0
-let g:ale_lint_delay = 2000
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_open_list = 0
-
-" use nice symbols for errors and warnings
-let g:ale_set_highlights = 1
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚠'
-
-" fixer configurations
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'c': ['clang-format'],
-\   'cpp': ['clang-format'],
-\   'crystal': ['crystal-tool-format'],
-\   'python': ['black'],
-\   'ruby': ['rubocop-format'],
-\   'rust': ['rustfmt'],
-\}
-
-let g:ale_ruby_rubocop_executable = 'rubocop'
-let g:ale_ruby_rubocop_options='-c ~/.rubocop.yml'
-
-" Disable brakeman linter
-let g:ale_linters_ignore = {
-\   'ruby': ['brakeman'],
-\}
-
-let g:ale_linters = {
-\   'ruby': ['rubocop'],
-\   'rust': ['analyzer', 'cargo'],
-\   'crystal': ['crystal', 'ameba'],
-\}
-
 let mapleader="\<Space>"
 let maplocalleader=","
 
@@ -125,7 +47,6 @@ let &background=filter([readfile(expand("$HOME/CloudStation/current_background_m
 
 let g:semshi#always_update_all_highlights = v:true
 
-set completeopt=menu,menuone,noselect,noinsert
 set cursorline
 set expandtab
 set nofoldenable
@@ -134,7 +55,6 @@ set hidden
 set list
 set listchars=tab:▸\ ,nbsp:¬,extends:»,precedes:«,trail:•
 set rtp+=~/.fzf
-set signcolumn=yes
 set showbreak=↪
 set spelllang=en_ca
 set tabstop=4 softtabstop=4 shiftwidth=4
@@ -208,16 +128,14 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'TimUntersberger/neogit'
 Plug 'lewis6991/gitsigns.nvim'
 
-" Async linting engine
-Plug 'dense-analysis/ale'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'rhysd/vim-lsp-ale'
-
-" Semantic language support
+" LSP
 Plug 'folke/lsp-colors.nvim'
+Plug 'folke/trouble.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'prabirshrestha/vim-lsp'
 
 " Use the project's settings if a `.editorconfig` file is defined.
 Plug 'editorconfig/editorconfig-vim'
@@ -226,6 +144,7 @@ Plug 'cweagans/vim-taskpaper'
 
 " C++
 Plug 'bfrg/vim-cpp-modern'
+Plug 'p00f/clangd_extensions.nvim'
 
 " Crystal
 Plug 'vim-crystal/vim-crystal'
@@ -239,6 +158,10 @@ Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': '
 
 " Rust
 Plug 'rust-lang/rust.vim'
+Plug 'simrat39/rust-tools.nvim'
+
+" Slim Templates
+Plug 'slim-template/vim-slim'
 
 " " Treesitter for syntax highlighting, etc.
 " Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } | Plug 'romgrk/nvim-treesitter-context'
@@ -246,7 +169,6 @@ Plug 'rust-lang/rust.vim'
 " Show indentation
 Plug 'lukas-reineke/indent-blankline.nvim'
 
-Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 call plug#end()
 
 lua require('config')
@@ -272,6 +194,9 @@ nnoremap <silent> <leader><tab> <c-^>
 
 " Quickly write the file
 nnoremap <silent> <leader>w :w<CR>
+
+" Reformat using LSP
+nnoremap <leader>ff <cmd>lua vim.lsp.buf.formatting()<cr>
 
 nnoremap <silent> <leader>q :call <SID>ToggleWindow("quickfix")<cr>
 nnoremap <silent> <leader>l :call <SID>ToggleWindow("loclist")<cr>
@@ -303,8 +228,6 @@ nnoremap <leader>gs :Git<cr>
 nnoremap <leader>gw :Gwrite<cr>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
-
-nnoremap <LocalLeader>l :ALELint<return>
 
 " Shortcode to reference current file's path in command line mode.
 cnoremap <expr> %% expand('%:h').'/'
@@ -372,18 +295,10 @@ if &background ==? "light"
     highlight! CursorLine ctermbg=255 guibg=#e0f5ff
     highlight! Visual ctermbg=7 guibg=#ffe0e0
     highlight! ColorColumn guibg=#f9f7f7
-
-    highlight! ALEVirtualTextError guifg=#d32c39
-    highlight! ALEVirtualTextWarning guifg=#d99a26
-    highlight! ALEVirtualTextInfo guifg=#6c9f47
 else
     highlight! CursorColumn ctermbg=0 guibg=#1d2026
     highlight! CursorLine ctermbg=0 guibg=#1d2026
     highlight! ColorColumn guibg=#332727
-
-    highlight! ALEVirtualTextError guifg=#e06c75
-    highlight! ALEVirtualTextWarning guifg=#e5c07b
-    highlight! ALEVirtualTextInfo guifg=#98c379
 endif
 
 highlight! link Define Statement
@@ -396,15 +311,11 @@ highlight Comment cterm=italic gui=italic
 
 " Highlight the "nocheckin" marker
 autocmd Syntax * syntax match localCheckinMarker "\v\:nocheck(in)?\:" containedin=.*Comment contained
-highlight link localCheckinMarker ErrorMsg
+highlight! link localCheckinMarker ErrorMsg
 inoreabbr :nc: :nocheckin:
 
-highlight link ALEWarningSign SpellLocal
-highlight link ALEErrorSign SpellBad
-highlight link ALEWarning SpellBad
-
 " Enable type inlay hints
-autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
+" autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
 
 augroup ft_fugitive
     au!
@@ -431,18 +342,6 @@ augroup vimrcEx
     " Force .slim to use slim filetype
     autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
 augroup END
-
-function! SmartInsertCompletion() abort
-    " Use the default CTRL-N in completion menus
-    if pumvisible()
-        return "\<C-n>"
-    endif
-
-    " Exit and re-enter insert mode, and use insert completion
-    return "\<C-c>a\<C-n>"
-endfunction
-inoremap <silent> <TAB> <C-R>=SmartInsertCompletion()<CR>
-set omnifunc=ale#completion#OmniFunc
 
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
