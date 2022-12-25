@@ -1,7 +1,3 @@
-" Use the experimantal filetype.lua for faster startime
-let g:do_filetype_lua = 1
-let g:did_load_filetypes = 0
-
 " Disable standard plugins.  These have all been replaced by faster options.
 let g:loaded_matchparen        = 1
 let g:loaded_matchit           = 1
@@ -22,7 +18,7 @@ let g:cpp_attributes_highlight = 1
 
 let g:python3_host_prog = '/usr/local/bin/python3'
 
-let g:ruby_host_prog = expand('$HOME/.rubies/ruby-2.6.6/bin/ruby')
+let g:ruby_host_prog = expand('$HOME/.rubies/ruby-3.1.3/bin/ruby')
 let g:ruby_path = g:ruby_host_prog
 
 let g:test#preserve_screen = 0
@@ -43,13 +39,10 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
 
-let &background=filter([readfile(expand("$HOME/CloudStation/current_background_mode"))[0], 'light'], '!empty(v:val)')[0]
-
 let g:semshi#always_update_all_highlights = v:true
 
 set cursorline
 set expandtab
-set nofoldenable
 set grepprg=rg\ --vimgrep\ $*
 set hidden
 set list
@@ -78,20 +71,27 @@ set shortmess+=A
 " Load plugins
 call plug#begin('~/.vim_plugins')
 " Color scheme
-Plug 'evansb/vim-colors-pencil'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'rakr/vim-one'
-Plug 'rakr/vim-two-firewatch'
-Plug 'sainnhe/sonokai'
-Plug 'axvr/photon.vim'
-Plug 'tomasr/molokai'
-Plug 'jacoborus/tender.vim'
 Plug 'mhartington/oceanic-next'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'jacoborus/tender.vim'
+
+" Hightlight hex colors, etc.
+Plug 'NvChad/nvim-colorizer.lua'
+
+" Add missing LSP colors
+Plug 'folke/lsp-colors.nvim'
 
 " Status line
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+
+" Make it easier to remap an alternative for the escape key
+Plug 'zhou13/vim-easyescape'
+
+" Sneak Search'
+Plug 'justinmk/vim-sneak'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -112,7 +112,7 @@ Plug 'nvim-telescope/telescope.nvim' | Plug 'nvim-telescope/telescope-fzf-native
 
 " A bunch of Tim Pope plugins to make using vim easier
 Plug 'tpope/vim-sensible'
-" Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-endwise', { 'for': ['lua', 'elixir', 'ruby', 'crystal', 'sh', 'bash', 'zsh', 'vim', 'c', 'cpp', 'make'] }
 Plug 'tpope/vim-repeat' | Plug 'tpope/vim-abolish' | Plug 'tpope/vim-surround' | Plug 'tpope/vim-unimpaired' | Plug 'tpope/vim-commentary'
@@ -129,13 +129,13 @@ Plug 'TimUntersberger/neogit'
 Plug 'lewis6991/gitsigns.nvim'
 
 " LSP
-Plug 'folke/lsp-colors.nvim'
 Plug 'folke/trouble.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'prabirshrestha/vim-lsp'
+Plug 'nvim-lua/lsp-status.nvim'
 
 " Use the project's settings if a `.editorconfig` file is defined.
 Plug 'editorconfig/editorconfig-vim'
@@ -147,28 +147,27 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'p00f/clangd_extensions.nvim'
 
 " Crystal
-Plug 'vim-crystal/vim-crystal'
+Plug 'vim-crystal/vim-crystal', { 'for': 'crystal' }
 
 " Python
 " Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
 " Ruby
-Plug 'jlcrochet/vim-ruby', { 'for': 'ruby' } | Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'jlcrochet/vim-ruby' | Plug 'tpope/vim-rails'
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 
 " Rust
-Plug 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'simrat39/rust-tools.nvim'
 
 " Slim Templates
-Plug 'slim-template/vim-slim'
-
-" " Treesitter for syntax highlighting, etc.
-" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } | Plug 'romgrk/nvim-treesitter-context'
+Plug 'slim-template/vim-slim', { 'for': 'slim' }
 
 " Show indentation
 Plug 'lukas-reineke/indent-blankline.nvim'
 
+" Fast folding
+Plug 'kevinhwang91/nvim-ufo' | Plug 'kevinhwang91/promise-async'
 call plug#end()
 
 lua require('config')
@@ -196,7 +195,8 @@ nnoremap <silent> <leader><tab> <c-^>
 nnoremap <silent> <leader>w :w<CR>
 
 " Reformat using LSP
-nnoremap <leader>ff <cmd>lua vim.lsp.buf.formatting()<cr>
+nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<cr>
+vnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<cr>
 
 nnoremap <silent> <leader>q :call <SID>ToggleWindow("quickfix")<cr>
 nnoremap <silent> <leader>l :call <SID>ToggleWindow("loclist")<cr>
@@ -207,7 +207,8 @@ nnoremap <silent> <leader>8 :nohlsearch<cr>
 " Fuzzy finder
 nnoremap <leader><leader> <cmd>Telescope find_files<cr>
 nnoremap <leader>j <cmd>Telescope buffers<cr>
-nnoremap <leader>c <cmd>Telescope tags<cr>
+nnoremap <leader>f <cmd>Telescope live_grep<cr>
+nnoremap <leader>t <cmd>Telescope tags<cr>
 
 " Test runner
 nnoremap <silent> <leader>sf <cmd>TestFile<cr>
@@ -231,6 +232,9 @@ nnoremap gdl :diffget //3<CR>
 
 " Shortcode to reference current file's path in command line mode.
 cnoremap <expr> %% expand('%:h').'/'
+
+" Copy the visual contents to the system clipboard
+vnoremap <leader>y "+y
 
 " Configure terminal
 if has('nvim')
@@ -266,39 +270,38 @@ function! s:ToggleWindow(type)
 endfunction
 
 " Enable 24bit colors if we're not SSH'd into a remote server.
-if empty($SSH_CLIENT)
+if $COLORTERM ==? "truecolor"
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
 
-    " call one#highlight('rubyComment', '', '', 'bold,italic')
+    set termguicolors
+    lua require'colorizer'.setup()
 
     if &background ==? "light"
         let g:one_allow_italics = 1
         colorscheme one
 
+        highlight! CursorColumn ctermbg=255 guibg=#e0f5ff
+        highlight! CursorLine ctermbg=255 guibg=#e0f5ff
+        highlight! Visual ctermbg=7 guibg=#ffe0e0
+        highlight! ColorColumn guibg=#f9f7f7
+
         call one#highlight('Todo', 'a626a4', 'fafafa', 'bold')
         call one#highlight('rubyBlockParameter', '4078f2', '', 'none')
         call one#highlight('rubyBlockParameterList', '4078f2', '', 'none')
     else
-        let g:oceanic_next_terminal_bold = 1
-        let g:oceanic_next_terminal_italic = 1
-        colorscheme OceanicNext
+        " colorscheme tokyonight-night
+        colorscheme tender
     endif
+
+    " Create custom colors for LSP giagnostics
+    highlight! DiagnosticError ctermfg=Red guifg=#db4b4b
+    highlight! DiagnosticWarn ctermfg=DarkYellow guifg=#e0af68
+    highlight! DiagnosticInfo ctermfg=LightBlue guifg=#0db9d7
+    highlight! DiagnosticHint ctermfg=Green guifg=#10B981
 else
     set t_Co=256
     colorscheme paramount
-endif
-
-if &background ==? "light"
-    highlight! CursorColumn ctermbg=255 guibg=#e0f5ff
-    highlight! CursorLine ctermbg=255 guibg=#e0f5ff
-    highlight! Visual ctermbg=7 guibg=#ffe0e0
-    highlight! ColorColumn guibg=#f9f7f7
-else
-    highlight! CursorColumn ctermbg=0 guibg=#1d2026
-    highlight! CursorLine ctermbg=0 guibg=#1d2026
-    highlight! ColorColumn guibg=#332727
 endif
 
 highlight! link Define Statement
@@ -309,10 +312,19 @@ hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=un
 " Enable italics for comments
 highlight Comment cterm=italic gui=italic
 
+" Dull the mail signature
+highlight! link mailSignature Comment
+
 " Highlight the "nocheckin" marker
 autocmd Syntax * syntax match localCheckinMarker "\v\:nocheck(in)?\:" containedin=.*Comment contained
 highlight! link localCheckinMarker ErrorMsg
 inoreabbr :nc: :nocheckin:
+
+" Provide an alternative to Escape in insert mode
+let g:easyescape_chars = { "j": 1, "k": 1 }
+let g:easyescape_timeout = 50
+cnoremap jk <ESC>
+cnoremap kj <ESC>
 
 " Enable type inlay hints
 " autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
@@ -341,9 +353,20 @@ augroup vimrcEx
 
     " Force .slim to use slim filetype
     autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
+
+    " Highlight yank
+    au TextYankPost * silent! lua vim.highlight.on_yank()
 augroup END
 
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
+
+" autocomplete using coq
+inoremap <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
+inoremap <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
+inoremap <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
+inoremap <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+inoremap <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<C-X>\<C-U>"
+inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
