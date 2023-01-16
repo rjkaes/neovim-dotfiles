@@ -80,7 +80,7 @@ require('lualine').setup({
                 shorten_target = 20,
             },
         },
-        lualine_x = { "require('lsp-status').status()", 'encoding', 'filetype' },
+        lualine_x = { 'encoding', 'filetype' },
     },
 })
 

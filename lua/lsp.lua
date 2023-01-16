@@ -22,18 +22,8 @@ vim.g.coq_settings = {
 
 local lsp = require "lspconfig"
 local coq = require "coq"
-local lsp_status = require('lsp-status')
-lsp_status.config({
-    status_symbol = '',
-    indicator_info = 'ℹ',
-    diagnostics = false,
-    current_function = false,
-    show_filename = false,
-})
-lsp_status.register_progress()
 
 local capabilities = coq.lsp_ensure_capabilities()
-capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
 
 local rubocop_command = vim.fn.expand("$HOME/bin/rubocop")
 local rubocop_formatter_command = vim.fn.expand("$HOME/bin/rubocop-formatter")
@@ -123,7 +113,6 @@ null_ls.setup({
 -- TODO: Need to support ameba for crystal via null-ls
 
 require('rust-tools').setup({
-    on_attach = lsp_status.on_attach,
     capabilities = capabilities,
     -- Disable proc macro as it SLOWS down rust-analyzer
     server = {
@@ -143,3 +132,5 @@ require('rust-tools').setup({
 require("clangd_extensions").setup({
     capabilities = capabilities,
 })
+
+require('fidget').setup()

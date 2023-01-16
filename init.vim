@@ -41,6 +41,11 @@ let g:netrw_winsize = 25
 
 let g:semshi#always_update_all_highlights = v:true
 
+" Tada Configuration for TODO list
+let g:tada_todo_style = 'unicode'
+let g:tada_todo_pane_file = 'TODO'
+let g:tada_todo_pane_location = 'top'
+
 set cursorline
 set expandtab
 set grepprg=rg\ --vimgrep\ $*
@@ -135,12 +140,13 @@ Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'nvim-lua/lsp-status.nvim'
+Plug 'j-hui/fidget.nvim'
 
 " Use the project's settings if a `.editorconfig` file is defined.
 Plug 'editorconfig/editorconfig-vim'
 
-Plug 'cweagans/vim-taskpaper'
+" Plug 'cweagans/vim-taskpaper'
+Plug 'dewyze/vim-tada'
 
 " C++
 Plug 'bfrg/vim-cpp-modern'
@@ -287,8 +293,6 @@ if $COLORTERM ==? "truecolor"
         highlight! ColorColumn guibg=#f9f7f7
 
         call one#highlight('Todo', 'a626a4', 'fafafa', 'bold')
-        call one#highlight('rubyBlockParameter', '4078f2', '', 'none')
-        call one#highlight('rubyBlockParameterList', '4078f2', '', 'none')
     else
         " colorscheme tokyonight-night
         colorscheme tender
@@ -349,7 +353,7 @@ augroup vimrcEx
     autocmd WinLeave * setlocal nocursorline
 
     " Make TODO files taskpaper files
-    autocmd BufNewFile,BufRead TODO set filetype=taskpaper
+    autocmd BufNewFile,BufRead TODO set filetype=tada
 
     " Force .slim to use slim filetype
     autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
