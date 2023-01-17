@@ -1,1 +1,1 @@
-source ~/.vim/after/ftplugin/ruby.vim
+runtime! after/ftplugin/ruby.vim

@@ -1,4 +1,4 @@
-source ~/.vim/after/ftplugin/text.vim
+runtime! after/ftplugin/text.vim
 setlocal textwidth=72
 
 " Remove everything from the current line to just before the signature.
