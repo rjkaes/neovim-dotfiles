@@ -1,8 +1,19 @@
 return {
     -- Load the two most common color schemes during startup as we need them
-    { 'rakr/vim-one', lazy = false, priority = 1000 },
+    -- { 'rakr/vim-one', lazy = false, priority = 1000, init = function() vim.g.one_allow_italics = true end, },
     { 'jacoborus/tender.vim', lazy = false, priority = 1000 },
-    { 'folke/tokyonight.nvim', branch = 'main' },
+    {
+        'sainnhe/edge',
+        lazy = false,
+        priority = 1000,
+        init = function()
+            vim.g.edge_better_performance = true
+            vim.g.edge_diagnostic_line_highlight = true
+            vim.g.edge_diagnostic_virtual_text = 'colored'
+            vim.g.edge_style = 'light'
+        end,
+    },
+    { 'folke/tokyonight.nvim', branch = 'main', config = true },
     { 'owickstrom/vim-colors-paramount' },
 
     -- Hightlight hex colors, etc.

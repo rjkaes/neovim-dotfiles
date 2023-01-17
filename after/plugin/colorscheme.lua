@@ -4,8 +4,7 @@ require('colorizer').setup()
 local api = vim.api
 
 if vim.o.background == 'light' then
-    vim.g.one_allow_italics = true
-    vim.cmd[[colorscheme one]]
+    vim.cmd[[colorscheme edge]]
 
     api.nvim_set_hl(0, 'CursorColumn', { ctermbg = 255, bg = '#e0f5ff' })
     api.nvim_set_hl(0, 'CursorLine', { ctermbg = 255, bg = '#e0f5ff' })
