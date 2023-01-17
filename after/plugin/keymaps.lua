@@ -32,8 +32,8 @@ vim.keymap.set('v', '<leader>y', '"+y')
 vim.keymap.set('n', "<leader>x", "<cmd>TroubleToggle<cr>")
 
 -- LSP formatting
-vim.keymap.set('n', '<localleader>f', function() vim.lspconfig.buf.formatting() end)
-vim.keymap.set('v', '<localleader>f', function() vim.lspconfig.buf.formatting() end)
+vim.keymap.set('n', '<localleader>f', function() vim.lsp.buf.formatting() end)
+vim.keymap.set('v', '<localleader>f', function() vim.lsp.buf.formatting() end)
 
 -- Git
 vim.keymap.set('n', '<leader>gb', ':Git blame<cr>')
