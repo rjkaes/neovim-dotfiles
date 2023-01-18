@@ -16,11 +16,11 @@ else
     vim.cmd[[colorscheme tender]]
 end
 
--- Create custom colors for LSP giagnostics
-api.nvim_set_hl(0, 'DiagnosticError', { ctermfg = 'Red', fg = '#db4b4b' })
-api.nvim_set_hl(0, 'DiagnosticWarn', { ctermfg = 'DarkYellow', fg = '#e0af68' })
-api.nvim_set_hl(0, 'DiagnosticInfo', { ctermfg = 'LightBlue', fg = '#0db9d7' })
-api.nvim_set_hl(0, 'DiagnosticHint', { ctermfg = 'Green', fg = '#10B981' })
+-- Create custom colors for virtual text diagnostics
+api.nvim_set_hl(0, 'VirtualTextError', { ctermfg = 'Red', fg = '#db4b4b' })
+api.nvim_set_hl(0, 'VirtualTextWarn', { ctermfg = 'DarkYellow', fg = '#e0af68' })
+api.nvim_set_hl(0, 'VirtualTextInfo', { ctermfg = 'LightBlue', fg = '#0db9d7' })
+api.nvim_set_hl(0, 'VirtualTextHint', { ctermfg = 'Green', fg = '#10B981' })
 
 api.nvim_set_hl(0, 'Define', { link = 'Statement' })
 
