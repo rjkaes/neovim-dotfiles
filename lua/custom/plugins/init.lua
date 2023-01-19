@@ -98,5 +98,5 @@ return {
     { 'nelstrom/vim-textobj-rubyblock', ft = 'ruby' },
 
     -- -- Slim Templates
-    -- Plug 'slim-template/vim-slim', { 'for': 'slim' }
+    { 'slim-template/vim-slim', ft = 'slim' },
 }
