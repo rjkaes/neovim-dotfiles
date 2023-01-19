@@ -22,10 +22,6 @@ return {
     -- Add missing LSP colors
     { 'folke/lsp-colors.nvim' },
 
-    -- Status line
-    { 'nvim-lualine/lualine.nvim' },
-    { 'kyazdani42/nvim-web-devicons' },
-
     -- Sneak Search'
     { 'justinmk/vim-sneak' },
 
