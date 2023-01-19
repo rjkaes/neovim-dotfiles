@@ -20,7 +20,7 @@ return {
             { 'williamboman/mason.nvim', config = true },
             {
                 'williamboman/mason-lspconfig.nvim',
-                build = function()
+                config = function()
                     local lsp = require("mason-lspconfig")
                     local capabilities = vim.lsp.protocol.make_client_capabilities()
 
