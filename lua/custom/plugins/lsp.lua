@@ -1,5 +1,4 @@
 local on_attach = function(_, bufnr)
-
 end
 
 local servers = {
@@ -11,6 +10,14 @@ local servers = {
         },
     },
 }
+
+-- Create a new table with JUST the keys from `servers` to pass into LSP setup.
+local n = 0
+local ensure_installed = {}
+for k, _ in pairs(servers) do
+    n = n + 1
+    ensure_installed[n] = k
+end
 
 return {
     {
@@ -25,7 +32,7 @@ return {
                     local capabilities = vim.lsp.protocol.make_client_capabilities()
 
                     lsp.setup({
-                        ensure_installed = { 'sumneko_lua', 'rust_analyzer' },
+                        ensure_installed = ensure_installed,
                         automatic_installation = true,
                     })
 
