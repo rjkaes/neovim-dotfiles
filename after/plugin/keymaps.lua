@@ -1,3 +1,6 @@
+-- Write and quit
+vim.keymap.set('n', 'ZZ', ':wq<cr>', { silent = true })
+
 -- Quit everything!
 vim.keymap.set('n', 'QA', ':qa!<cr>')
 
