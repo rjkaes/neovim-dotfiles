@@ -20,6 +20,7 @@ return {
                     -- Disable LSP formatexpr (use the internal one)
                     vim.api.nvim_buf_set_option(bufnr, 'formatexpr', '')
                 end,
+                debounce = 1000, -- slow down!
                 -- debug = true,
                 sources = {
                     -- NOTE: Completely customize vale to handle mutt which does not create

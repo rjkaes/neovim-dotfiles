@@ -45,6 +45,11 @@ return {
                             }
                         end
                     }
+
+                    vim.diagnostic.config {
+                        -- Don't update LSP within insert.  Wait until normal mode.
+                        update_in_insert = false,
+                    }
                 end,
             },
 
