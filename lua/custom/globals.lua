@@ -3,7 +3,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 vim.g.cpp_attributes_highlight = 1
-vim.g.python3_host_prog = '/usr/local/bin/python3'
 
 -- Configure netrw to behave mostly like NERDTree
 vim.g.netrw_banner = 0
@@ -20,7 +19,7 @@ vim.g.tada_todo_pane_location = 'top'
 vim.g['semshi#always_update_all_highlights'] = true
 
 -- Ruby testing
-vim.g.ruby_host_prog = vim.fn.expand('$HOME/.rubies/ruby-3.1.3/bin/ruby')
+vim.g.ruby_host_prog = vim.fn.expand('$HOME/.rubies/ruby-3.2.0/bin/ruby')
 vim.g.ruby_path = vim.g.ruby_host_prog
 
 vim.g['test#preserve_screen'] = 0
