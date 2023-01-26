@@ -63,7 +63,10 @@ return {
     { 'radenling/vim-dispatch-neovim' },
     { 'kassio/neoterm' },
     { 'janko-m/vim-test' },
-    { 'tpope/vim-fugitive' },
+    {
+        'tpope/vim-fugitive',
+        dependencies = { 'tpope/vim-rhubarb' },
+    },
     { 'tommcdo/vim-fubitive' },
 
     -- Tabular
