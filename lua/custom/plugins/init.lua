@@ -59,10 +59,14 @@ return {
     { 'tpope/vim-abolish' },
     { 'tpope/vim-surround' },
     { 'tpope/vim-unimpaired' },
-    { 'tpope/vim-dispatch' },
-    { 'radenling/vim-dispatch-neovim' },
     { 'kassio/neoterm' },
-    { 'janko-m/vim-test' },
+    {
+        'janko-m/vim-test',
+        dependencies = {
+            'radenling/vim-dispatch-neovim',
+            dependencies = { 'tpope/vim-dispatch' },
+        },
+    },
     {
         'tpope/vim-fugitive',
         dependencies = { 'tpope/vim-rhubarb' },

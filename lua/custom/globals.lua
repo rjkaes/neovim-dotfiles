@@ -23,7 +23,7 @@ vim.g.ruby_host_prog = vim.fn.expand('$HOME/.rubies/ruby-3.2.0/bin/ruby')
 vim.g.ruby_path = vim.g.ruby_host_prog
 
 vim.g['test#preserve_screen'] = 0
-vim.v['test#strategy'] = 'dispatch'
+vim.g['test#strategy'] = 'dispatch'
 
 -- Run rspec (with bundle exec) but use the "rails" compiler to parse the output
 vim.g['test#ruby#bundle_exec'] = 1
