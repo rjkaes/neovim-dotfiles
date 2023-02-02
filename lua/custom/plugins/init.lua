@@ -1,10 +1,9 @@
 return {
     -- Load the two most common color schemes during startup as we need them
-    -- { 'rakr/vim-one', lazy = false, priority = 1000, init = function() vim.g.one_allow_italics = true end, },
+    { 'rakr/vim-one', lazy = false, priority = 1000, init = function() vim.g.one_allow_italics = true end, },
     { 'jacoborus/tender.vim', lazy = false, priority = 1000 },
     {
         'sainnhe/edge',
-        lazy = false,
         priority = 1000,
         init = function()
             vim.g.edge_better_performance = true
