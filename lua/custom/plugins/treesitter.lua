@@ -9,10 +9,10 @@ return {
         config = function()
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
-                ensure_installed = { 'lua', 'vim', 'help', 'ruby' },
+                ensure_installed = { 'lua', 'vim', 'help', 'ruby', 'markdown' },
                 highlight = {
                     enable = true,
-                    additional_vim_regex_highlighting = { 'text', 'mail' },
+                    additional_vim_regex_highlighting = { 'text', 'mail', 'markdown' },
                 },
                 incremental_selection = {
                     enable = true,
