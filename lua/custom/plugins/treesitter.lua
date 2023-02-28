@@ -12,7 +12,7 @@ return {
                 ensure_installed = { 'lua', 'vim', 'help', 'ruby', 'markdown' },
                 highlight = {
                     enable = true,
-                    additional_vim_regex_highlighting = { 'text', 'mail', 'markdown' },
+                    additional_vim_regex_highlighting = { 'text', 'mail', 'markdown', 'ruby' },
                 },
                 incremental_selection = {
                     enable = true,
