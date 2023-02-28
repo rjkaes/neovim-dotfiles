@@ -2,7 +2,6 @@ setlocal shiftwidth=2
 setlocal spelllang=en_ca
 setlocal tabstop=2
 setlocal textwidth=80
-setlocal colorcolumn=+1
 setlocal formatoptions-=t formatoptions+=croql
 
 " colourize the operators and space errors
