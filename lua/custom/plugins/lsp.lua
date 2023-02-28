@@ -2,13 +2,8 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-    rust_analyzer = {},
-    sumneko_lua = {
-        Lua = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false },
-        },
-    },
+    ['rust_analyzer'] = {},
+    ['lua_ls'] = {},
 }
 
 -- Create a new table with JUST the keys from `servers` to pass into LSP setup.
