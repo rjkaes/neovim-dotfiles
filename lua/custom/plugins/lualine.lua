@@ -1,6 +1,3 @@
-local color_theme_mappings = { light = 'OceanicNext', dark = 'tokyonight' }
-local local_color_theme = color_theme_mappings[vim.o.background]
-
 return {
     {
         'nvim-lualine/lualine.nvim',
@@ -10,7 +7,7 @@ return {
         },
         opts = {
             options = {
-                theme = local_color_theme,
+                theme = 'catppuccin',
             },
 
             sections = {

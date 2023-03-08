@@ -1,33 +1,4 @@
 return {
-    -- Load the two most common color schemes during startup as we need them
-    { 'rakr/vim-one', lazy = true, priority = 1000, init = function() vim.g.one_allow_italics = true end, },
-    { 'lourenci/github-colors', lazy = false, priority = 1000, },
-    { 'jacoborus/tender.vim', lazy = false, priority = 1000 },
-    {
-        'sainnhe/edge',
-        priority = 1000,
-        init = function()
-            vim.g.edge_better_performance = true
-            vim.g.edge_diagnostic_line_highlight = true
-            vim.g.edge_diagnostic_virtual_text = 'colored'
-            vim.g.edge_style = 'light'
-        end,
-    },
-    { 'folke/tokyonight.nvim', branch = 'main', config = true },
-    { 'owickstrom/vim-colors-paramount' },
-    {
-        'projekt0n/github-nvim-theme',
-        lazy = false,
-        priority = 1000,
-        name = 'github-theme',
-    },
-
-    -- Hightlight hex colors, etc.
-    { 'NvChad/nvim-colorizer.lua' },
-
-    -- Add missing LSP colors
-    { 'folke/lsp-colors.nvim' },
-
     -- Sneak Search'
     { 'justinmk/vim-sneak' },
 

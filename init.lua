@@ -3,7 +3,6 @@ vim.g.maplocalleader = ","
 
 require "custom.disable_builtin"
 require "custom.globals"
-require 'custom.background'
 
 -- Start up the package manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
