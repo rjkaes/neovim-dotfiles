@@ -39,6 +39,7 @@ require("lazy").setup("custom.plugins", {
 })
 
 require 'custom.options'
+require 'custom.theme'
 
 vim.cmd[[
 " Toggle the quickfix or loclist windows.

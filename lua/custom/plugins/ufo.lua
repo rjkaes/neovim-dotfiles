@@ -4,7 +4,7 @@ return {
         dependencies = { 'kevinhwang91/promise-async' },
         opts = {
             provider_selector = function(bufnr, filetype, buftype)
-                return {'treesitter', 'indent'}
+                return { 'treesitter', 'indent' }
             end,
             fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
                 local newVirtText = {}

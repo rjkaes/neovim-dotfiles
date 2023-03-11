@@ -7,7 +7,7 @@ return {
         },
         opts = {
             options = {
-                theme = 'catppuccin',
+                theme = 'powerline',
             },
 
             sections = {
@@ -16,7 +16,6 @@ return {
                     {
                         'diagnostics',
                         sources = { 'nvim_lsp', 'nvim_diagnostic' },
-                        colored = false,
                     },
                 },
                 lualine_c = {
@@ -29,6 +28,5 @@ return {
                 lualine_x = { 'encoding', 'filetype' },
             },
         },
-
     },
 }
