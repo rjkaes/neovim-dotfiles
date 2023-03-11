@@ -2,8 +2,24 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-    ['rust_analyzer'] = {},
-    ['lua_ls'] = {},
+    ['rust_analyzer'] = {
+        cargo = {
+            allFeatures = true,
+        },
+        completion = {
+            postfix = {
+                enable = false,
+            },
+        },
+    },
+    ['lua_ls'] = {
+        Lua = {
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+        },
+    },
 }
 
 -- Create a new table with JUST the keys from `servers` to pass into LSP setup.
@@ -24,7 +40,7 @@ return {
                 'williamboman/mason-lspconfig.nvim',
                 config = function()
                     local lsp = require("mason-lspconfig")
-                    local capabilities = vim.lsp.protocol.make_client_capabilities()
+                    local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
                     lsp.setup({
                         ensure_installed = ensure_installed,
@@ -61,7 +77,15 @@ return {
             },
 
             -- Useful status updates for LSP
-            { 'j-hui/fidget.nvim', config = true },
+            {
+                'j-hui/fidget.nvim',
+                opts = {
+                    window = {
+                        blend = 0,
+                    },
+                },
+            },
+
 
             -- -- Additional lua configuration, makes nvim stuff amazing
             -- 'folke/neodev.nvim',
