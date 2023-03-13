@@ -1,11 +1,13 @@
 return {
-    { 'hrsh7th/cmp-nvim-lsp', branch = 'main' },
-    { 'hrsh7th/cmp-buffer', branch = 'main' },
-    { 'hrsh7th/cmp-cmdline', branch = 'main' },
-    { 'onsails/lspkind.nvim' },
     {
         'hrsh7th/nvim-cmp',
         branch = 'main',
+        dependencies = {
+            { 'hrsh7th/cmp-buffer', branch = 'main' },
+            { 'hrsh7th/cmp-cmdline', branch = 'main' },
+            { 'hrsh7th/cmp-nvim-lsp', branch = 'main' },
+            { 'onsails/lspkind.nvim' },
+        },
         config = function()
             vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
