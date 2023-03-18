@@ -41,8 +41,11 @@ vim.opt.spelllang = 'en_ca'
 vim.opt.tabstop = 4
 
 vim.opt.timeoutlen = 300 -- http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
-vim.opt.updatetime = 250 
+vim.opt.updatetime = 250
 vim.opt.winwidth = 83 -- Give enough space for the gutter
+
+-- Enable Cursor highlighting
+vim.opt.guicursor:append('a:Cursor/lCursor')
 
 vim.opt.rtp:append { '~/.fzf ' }
 vim.opt.tags:append { '.git/tags' }

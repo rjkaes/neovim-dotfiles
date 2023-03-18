@@ -10,6 +10,10 @@ require('onedark').setup({
 })
 vim.cmd.colorscheme 'onedark'
 
+local colors = require('onedark.colors')
+
+api.nvim_set_hl(0, 'Cursor', { bg = colors.bg3 })
+
 if vim.o.background == 'light' then
     api.nvim_set_hl(0, 'CursorLine', { ctermbg = 255, bg = '#e0f5ff' })
     api.nvim_set_hl(0, 'Visual', { ctermbg = 7, bg = '#ffe0e0' })
