@@ -1,24 +1,15 @@
 -- Make sure these are always loaded regardless of what colorscheme is used.
 local dependencies = {
     -- Hightlight hex colors, etc.
-    { 'NvChad/nvim-colorizer.lua', name = 'colorizer', config = true, lazy = false },
+    { 'NvChad/nvim-colorizer.lua', name = 'colorizer', lazy = false, config = true },
 
     -- Add missing LSP colors
     { 'folke/lsp-colors.nvim', name = 'lsp-colors', lazy = false, config = true },
 }
 
 return {
-    -- light
     {
-        'rakr/vim-one',
-        lazy = false,
-        priority = 1000,
-        init = function() vim.g.one_allow_italics = true end,
-        dependencies = dependencies,
-    },
-    -- dark
-    {
-        'jacoborus/tender.vim',
+        'navarasu/onedark.nvim',
         lazy = false,
         priority = 1000,
         dependencies = dependencies,

@@ -1,12 +1,18 @@
 local api = vim.api
 
-if vim.o.background == 'light' then
-    vim.cmd.colorscheme 'one'
+require('onedark').setup({
+    style = vim.o.background,
+    diagnostics = {
+        darker = false,
+        undercurl = true,
+        background = true,
+    },
+})
+vim.cmd.colorscheme 'onedark'
 
+if vim.o.background == 'light' then
     api.nvim_set_hl(0, 'CursorLine', { ctermbg = 255, bg = '#e0f5ff' })
     api.nvim_set_hl(0, 'Visual', { ctermbg = 7, bg = '#ffe0e0' })
-else
-    vim.cmd.colorscheme 'tender'
 end
 
 -- Dull the mail signature
