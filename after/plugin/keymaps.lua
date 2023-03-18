@@ -7,6 +7,13 @@ vim.keymap.set('n', 'QA', ':qa!<cr>')
 -- switch to using Perl standard regular expressions
 vim.keymap.set({'n','v'}, '/', '/\\v')
 
+-- Search results centered please
+vim.keymap.set('n', 'n', 'nzz', { silent = true })
+vim.keymap.set('n', 'N', 'Nzz', { silent = true })
+vim.keymap.set('n', '*', '*zz', { silent = true })
+vim.keymap.set('n', '#', '#zz', { silent = true })
+vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
+
 -- open TODO file
 vim.keymap.set('n', '<leader>o', ':split TODO<cr>', { silent = true })
 
