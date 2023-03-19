@@ -3,21 +3,27 @@ return {
 
     {
         'simrat39/rust-tools.nvim',
-        ft = 'rust',
+        ft = { 'rust', 'rs' },
         opts = {
-            server = {
-                standalone = false,
-                settings = {
-                    ['rust-analyzer'] = {
-                        procMacro = {
-                            attributes = {
-                                enable = false,
+                server = {
+                    settings = {
+                        ['rust-analyzer'] = {
+                            cargo = {
+                                allFeatures = true,
                             },
-                            enable = false
-                        }
-                    }
-                }
-            },
+                            completion = {
+                                postfix = {
+                                    enable = false,
+                                },
+                            },
+                            -- enable clippy on save
+                            checkOnSave = {
+                                command = "clippy"
+                            },
+                        },
+                    },
+                },
+
         },
     },
 }

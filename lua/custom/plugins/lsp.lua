@@ -1,33 +1,19 @@
 local on_attach = function(_, bufnr)
 end
 
-local servers = {
-    ['rust_analyzer'] = {
-        cargo = {
-            allFeatures = true,
-        },
-        completion = {
-            postfix = {
-                enable = false,
+local setup_lua_ls = function(capabilities)
+    require('lspconfig').lua_ls.setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+            Lua = {
+                diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = {'vim'},
+                },
             },
-        },
-    },
-    ['lua_ls'] = {
-        Lua = {
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'},
-            },
-        },
-    },
-}
-
--- Create a new table with JUST the keys from `servers` to pass into LSP setup.
-local n = 0
-local ensure_installed = {}
-for k, _ in pairs(servers) do
-    n = n + 1
-    ensure_installed[n] = k
+        }
+    }
 end
 
 return {
@@ -43,7 +29,7 @@ return {
                     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
                     lsp.setup({
-                        ensure_installed = ensure_installed,
+                        ensure_installed = { 'lua_ls' },
                         automatic_installation = true,
                     })
 
@@ -52,9 +38,9 @@ return {
                             require('lspconfig')[server_name].setup {
                                 capabilities = capabilities,
                                 on_attach = on_attach,
-                                settings = servers[server_name],
                             }
-                        end
+                        end,
+                        ['lua_ls'] = setup_lua_ls(capabilities),
                     }
 
                     vim.diagnostic.config {
