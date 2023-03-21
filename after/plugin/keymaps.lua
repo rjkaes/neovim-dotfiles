@@ -40,6 +40,12 @@ vim.keymap.set('v', '<leader>y', '"+y')
 
 -- Trouble
 vim.keymap.set('n', "<leader>x", "<cmd>TroubleToggle<cr>")
+vim.keymap.set('n', ']x',
+    function() require("trouble").next({skip_groups = true, jump = true}) end,
+    { silent = true })
+vim.keymap.set('n', '[x',
+    function() require("trouble").previous({skip_groups = true, jump = true}) end,
+    { silent = true })
 
 -- LSP formatting
 vim.keymap.set('n', '<localleader>f', function() vim.lsp.buf.formatting() end)
