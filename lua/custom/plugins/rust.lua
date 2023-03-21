@@ -16,10 +16,6 @@ return {
                                     enable = false,
                                 },
                             },
-                            -- enable clippy on save
-                            checkOnSave = {
-                                command = "clippy"
-                            },
                         },
                     },
                 },
