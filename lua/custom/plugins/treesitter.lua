@@ -10,7 +10,7 @@ return {
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
                 disable = { 'markdown' },
-                ensure_installed = { 'lua', 'vim', 'help', 'ruby' },
+                ensure_installed = { 'lua', 'vim', 'ruby' },
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = { 'text', 'mail' },
