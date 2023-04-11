@@ -2,22 +2,20 @@ local api = vim.api
 
 require('onedark').setup({
     style = vim.o.background,
+    ending_tildes = true,
     diagnostics = {
         darker = false,
         undercurl = true,
         background = true,
     },
+    highlights = {
+        Cursor = { bg = '$bg3', fmt = 'none' },
+        CursorLine = { bg = '$diff_change' }, -- light: #e0f5ff
+        Visual = { bg = '$diff_delete' }, -- light: #ffe0e0
+    },
 })
+
 vim.cmd.colorscheme 'onedark'
-
-local colors = require('onedark.colors')
-
-api.nvim_set_hl(0, 'Cursor', { bg = colors.bg3 })
-
-if vim.o.background == 'light' then
-    api.nvim_set_hl(0, 'CursorLine', { ctermbg = 255, bg = '#e0f5ff' })
-    api.nvim_set_hl(0, 'Visual', { ctermbg = 7, bg = '#ffe0e0' })
-end
 
 -- Dull the mail signature
 api.nvim_set_hl(0, 'mailSignature', { link = 'Comment' })
