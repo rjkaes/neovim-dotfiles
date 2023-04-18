@@ -1,6 +1,3 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
-
 require "custom.disable_builtin"
 require "custom.globals"
 
