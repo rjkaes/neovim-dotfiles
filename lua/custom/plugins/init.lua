@@ -83,15 +83,4 @@ return {
 
     -- -- Slim Templates
     { 'slim-template/vim-slim', ft = 'slim' },
-
-    -- GitHub Copilot
-    {
-        'github/copilot.vim',
-        lazy = true,
-        cmd = 'Copilot',
-        init = function()
-            vim.g.copilot_no_tab_map = true
-            vim.cmd[[imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")]]
-        end,
-    },
 }
