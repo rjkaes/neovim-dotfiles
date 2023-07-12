@@ -85,6 +85,7 @@ return {
             vim.g.tagalong_additional_filetypes = {'razor'}
         end
     },
+    { 'mattn/emmet-vim' },
 
     -- -- Python
     -- Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
