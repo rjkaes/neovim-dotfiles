@@ -62,6 +62,9 @@ return {
     -- Use the project's settings if a `.editorconfig` file is defined.
     { 'editorconfig/editorconfig-vim' },
 
+    -- Undo tree
+    { 'mbbill/undotree' },
+
     -- { 'cweagans/vim-taskpaper'
     { 'dewyze/vim-tada' },
 
@@ -69,8 +72,19 @@ return {
     { 'bfrg/vim-cpp-modern' },
     { 'p00f/clangd_extensions.nvim' },
 
+    -- C#
+    { 'jlcrochet/vim-razor' },
+
     -- Crystal
     { 'vim-crystal/vim-crystal', ft = 'crystal' },
+
+    -- HTML
+    {
+        'AndrewRadev/tagalong.vim',
+        init = function()
+            vim.g.tagalong_additional_filetypes = {'razor'}
+        end
+    },
 
     -- -- Python
     -- Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
