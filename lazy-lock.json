@@ -53,7 +53,7 @@
   "vim-endwise": { "branch": "master", "commit": "e714ac3bcfd5a90038de49c3254eded7c70ae3c3" },
   "vim-eunuch": { "branch": "master", "commit": "67f3dd32b4dcd1c427085f42ff5f29c7adc645c6" },
   "vim-floaterm": { "branch": "master", "commit": "bcaeabf89a92a924031d471395054d84bd88ce2f" },
-  "vim-fubitive": { "branch": "master", "commit": "327280357c793e694146e4713a90419ff1ea6cc1" },
+  "vim-fubitive": { "branch": "master", "commit": "8b7bffb4afdfad6e8582d3d63d6bb7c6add6e552" },
   "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },
   "vim-matchup": { "branch": "master", "commit": "207418404291d81df13612b966b7eb9841c9e704" },
   "vim-rails": { "branch": "master", "commit": "2b8c4fc831e0de2681beda0a2f48222812920a1d" },
