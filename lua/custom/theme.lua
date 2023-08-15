@@ -1,21 +1,32 @@
 local api = vim.api
 
-require('onedark').setup({
-    style = vim.o.background,
-    ending_tildes = true,
-    diagnostics = {
-        darker = false,
-        undercurl = true,
-        background = true,
+require("catppuccin").setup({
+    flavour = "mocha",
+    background = {
+        light = "latte",
+        dark = "mocha",
     },
-    highlights = {
-        Cursor = { bg = '$bg3', fmt = 'none' },
-        CursorLine = { bg = '$diff_change' }, -- light: #e0f5ff
-        Visual = { bg = '$diff_delete' }, -- light: #ffe0e0
+    show_end_of_buffer = true, -- shows the '~' characters after the end of buffers
+    color_overrides = {
+        mocha = {
+            base = "#1C1B21",
+            mantle = "#1C1B21",
+            crust = "#1C1B21",
+        },
+    },
+    integrations = {
+        alpha = false,
+        cmp = true,
+        fidget = true,
+        gitsigns = true,
+        lsp_trouble= true,
+        nvimtree = true,
+        treesitter = true,
     },
 })
 
-vim.cmd.colorscheme 'onedark'
+-- setup must be called before loading
+vim.cmd.colorscheme "catppuccin"
 
 -- Dull the mail signature
 api.nvim_set_hl(0, 'mailSignature', { link = 'Comment' })

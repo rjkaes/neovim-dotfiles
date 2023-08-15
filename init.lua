@@ -106,6 +106,9 @@ augroup vimrcEx
     " Force .slim to use slim filetype
     autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
 
+    " Use Razor syntax for cshtml files
+    autocmd BufNewFile,BufRead *.cshtml setlocal filetype=razor
+
     " Highlight yank
     au TextYankPost * silent! lua vim.highlight.on_yank()
 augroup END

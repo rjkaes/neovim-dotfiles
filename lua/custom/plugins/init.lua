@@ -1,7 +1,4 @@
 return {
-    -- Sneak Search'
-    { 'justinmk/vim-sneak' },
-
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
     { 'voldikss/vim-floaterm' },
@@ -57,13 +54,20 @@ return {
     { 'junegunn/goyo.vim', cmd = 'Goyo' },
 
     { 'folke/trouble.nvim' },
-    { 'jose-elias-alvarez/null-ls.nvim' },
 
     -- Use the project's settings if a `.editorconfig` file is defined.
     { 'editorconfig/editorconfig-vim' },
 
     -- Undo tree
     { 'mbbill/undotree' },
+
+    {
+        'ggandor/leap.nvim',
+        lazy = false,
+        config = function()
+            require('leap').add_default_mappings()
+        end,
+    },
 
     -- { 'cweagans/vim-taskpaper'
     { 'dewyze/vim-tada' },
@@ -74,6 +78,7 @@ return {
 
     -- C#
     { 'jlcrochet/vim-razor' },
+    { 'tmadsen/vim-compiler-plugin-for-dotnet' },
 
     -- Crystal
     { 'vim-crystal/vim-crystal', ft = 'crystal' },

@@ -22,6 +22,10 @@ end
 
 vim.opt.background = background_color()
 
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+vim.opt.colorcolumn = "+1"
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.hidden = true
@@ -40,8 +44,6 @@ vim.opt.softtabstop = 4
 vim.opt.spelllang = 'en_ca'
 vim.opt.tabstop = 4
 
-vim.opt.timeoutlen = 300 -- http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
-vim.opt.updatetime = 250
 vim.opt.winwidth = 83 -- Give enough space for the gutter
 
 -- Enable Cursor highlighting
@@ -60,3 +62,6 @@ vim.opt.wildignore:append { '*.spl' }
 vim.opt.wildignore:append { '*.sw?' }
 
 vim.wo.signcolumn = 'yes'
+
+-- Persist the undo tree for each file
+vim.opt.undofile = true

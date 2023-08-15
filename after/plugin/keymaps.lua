@@ -48,8 +48,7 @@ vim.keymap.set('n', '[x',
     { silent = true })
 
 -- LSP formatting
-vim.keymap.set('n', '<localleader>f', function() vim.lsp.buf.formatting() end)
-vim.keymap.set('v', '<localleader>f', function() vim.lsp.buf.formatting() end)
+vim.keymap.set('n', '<localleader>f', ':Format<cr>', { silent = true })
 
 -- Git
 vim.keymap.set('n', '<leader>gb', ':Git blame<cr>')
@@ -76,3 +75,6 @@ vim.keymap.set('n', '<leader>sf', '<cmd>TestFile<cr>', { silent = true })
 vim.keymap.set('n', '<leader>so', '<cmd>TestNearest<cr>', { silent = true })
 vim.keymap.set('n', '<leader>sa', '<cmd>TestSuite<cr>', { silent = true })
 vim.keymap.set('n', '<leader>ss', '<cmd>TestLast<cr>', { silent = true })
+
+-- Undo tree toggle
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)

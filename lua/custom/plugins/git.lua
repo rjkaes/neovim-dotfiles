@@ -1,5 +1,5 @@
 return {
-    { 'TimUntersberger/neogit', config = true },
+    { 'NeogitOrg/neogit', config = true },
     {
         'lewis6991/gitsigns.nvim',
         opts = {

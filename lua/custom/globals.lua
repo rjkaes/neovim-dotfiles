@@ -20,14 +20,10 @@ vim.g.tada_todo_statuses = {'planned', 'doing', 'complete'}
 vim.g.tada_todo_symbols = {
     planned = ' ',
     doing = '🛠️',
-    complete = '✅',
+    complete = '✔',
 }
 
 vim.g['semshi#always_update_all_highlights'] = true
-
--- Ruby testing
-vim.g.ruby_host_prog = vim.fn.expand('$HOME/.rubies/ruby-3.2.1/bin/ruby')
-vim.g.ruby_path = vim.g.ruby_host_prog
 
 vim.g['test#preserve_screen'] = 0
 vim.g['test#strategy'] = 'dispatch'

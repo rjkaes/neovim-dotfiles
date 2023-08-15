@@ -1,92 +1,145 @@
-local on_attach = function(_, bufnr)
-end
-
-local setup_lua_ls = function(capabilities)
-    require('lspconfig').lua_ls.setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = {
-            Lua = {
-                runtime = {
-                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                    version = 'LuaJIT',
-                },
-                diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    globals = {'vim'},
-                },
-                workspace = {
-                    -- Make the server aware of Neovim runtime files
-                    library = vim.api.nvim_get_runtime_file("", true),
-                },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                    enable = false,
-                },
-            },
-        }
-    }
-end
-
 return {
     {
-        'neovim/nvim-lspconfig',
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
         dependencies = {
-            -- Automatically install LSPs to stdpath for neovim
-            { 'williamboman/mason.nvim', config = true },
-            {
-                'williamboman/mason-lspconfig.nvim',
-                config = function()
-                    local lsp = require("mason-lspconfig")
-                    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
 
-                    lsp.setup({
-                        ensure_installed = { 'lua_ls', 'rust_analyzer' },
-                        automatic_installation = true,
-                    })
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp',                    branch = 'main' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'L3MON4D3/LuaSnip' },
 
-                    lsp.setup_handlers {
-                        function(server_name)
-                            require('lspconfig')[server_name].setup {
-                                capabilities = capabilities,
-                                on_attach = on_attach,
-                            }
-                        end,
-                        ['lua_ls'] = setup_lua_ls(capabilities),
+            { 'hrsh7th/cmp-buffer',                  branch = 'main' },
+            { 'hrsh7th/cmp-cmdline',                 branch = 'main' },
+            { 'hrsh7th/cmp-nvim-lsp',                branch = 'main' },
+            { 'hrsh7th/cmp-nvim-lsp-signature-help', branch = 'main' },
+            { 'onsails/lspkind.nvim' },
+        },
+        config = function()
+            local lsp = require('lsp-zero').preset({})
+
+            lsp.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp.default_keymaps({ buffer = bufnr })
+
+                local opts = { buffer = bufnr }
+
+                vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
+                vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+
+                -- reformat buffer using the LSP
+                vim.keymap.set({ 'n', 'x' }, 'gq', function()
+                    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+                end, opts)
+            end)
+
+            lsp.ensure_installed({
+                'lua_ls',
+                'omnisharp',
+                'standardrb',
+                'tsserver',
+            })
+
+            lsp.set_sign_icons({
+                error = '',
+                warn = '',
+                hint = '',
+                info = '',
+            })
+
+            -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/guides/quick-recipes.md#enable-folds-with-nvim-ufo
+            lsp.set_server_config({
+                capabilities = {
+                    textDocument = {
+                        foldingRange = {
+                            dynamicRegistration = false,
+                            lineFoldingOnly = true
+                        }
                     }
+                }
+            })
 
-                    vim.diagnostic.config {
-                        -- Don't update LSP within insert.  Wait until normal mode.
-                        update_in_insert = false,
-                        severity_sort = true,
-                    }
+            -- Configure lua language server for neovim
+            require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
-                    local signs = {
-                        Error = '',
-                        Warn = '',
-                        Hint = '',
-                        Info = 'ⓘ',
-                    }
-                    for type, icon in pairs(signs) do
-                        local hl = 'DiagnosticSign' .. type
-                        vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+            -- don't initialize this language server
+            -- we will use rust-tools to setup rust_analyzer
+            lsp.skip_server_setup({ 'rust_analyzer' })
+
+            lsp.setup()
+
+            -- initialize rust_analyzer with rust-tools
+            local rust_tools = require('rust-tools')
+            rust_tools.setup({
+                server = {
+                    on_attach = function(_, bufnr)
+                        vim.keymap.set('n', '<leader>ca', rust_tools.hover_actions.hover_actions, { buffer = bufnr })
                     end
-                end,
-            },
+                }
+            })
 
-            -- Useful status updates for LSP
-            {
-                'j-hui/fidget.nvim',
-                opts = {
-                    window = {
-                        blend = 0,
-                    },
+            -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/autocomplete.md#regular-tab-complete
+            local cmp = require('cmp')
+            local cmp_action = require('lsp-zero').cmp_action()
+
+            cmp.setup({
+                mapping = {
+                    ['<Tab>'] = cmp_action.tab_complete(),
+                    ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
                 },
+                formatting = {
+                    fields = { 'abbr', 'kind', 'menu' },
+                    format = require('lspkind').cmp_format({
+                        mode = 'symbol_text',
+                        maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                        ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                    })
+                },
+                sources = {
+                    { name = 'nvim_lsp' },
+                    { name = 'nvim_lsp_signature_help' },
+                    { name = 'buffer' },
+                },
+            })
+
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
+                }
+            })
+
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    {
+                        name = 'cmdline',
+                        option = {
+                            ignore_cmds = { 'Man', '!' }
+                        }
+                    }
+                })
+            })
+        end,
+    },
+
+    -- Useful status updates for LSP
+    {
+        'j-hui/fidget.nvim',
+        tag = 'legacy',
+        opts = {
+            window = {
+                blend = 0,
             },
-
-
-            -- -- Additional lua configuration, makes nvim stuff amazing
-            -- 'folke/neodev.nvim',
         },
     },
+
+    -- Additional lua configuration, makes nvim stuff amazing
+    { 'folke/neodev.nvim' },
 }
