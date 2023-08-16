@@ -92,6 +92,9 @@ return {
     },
     { 'mattn/emmet-vim' },
 
+    -- markdown
+    { 'preservim/vim-markdown' },
+
     -- -- Python
     -- Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
