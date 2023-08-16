@@ -29,6 +29,18 @@ return {
             rust = {
                 require("formatter.filetypes.rust").rustfmt,
             },
+            sql = {
+                function()
+                    return {
+                        exe = "sqlformat",
+                        args = {
+                            "-k", "upper", "-r", "-s", "-",
+                        },
+                        stdin = true,
+                    }
+                end,
+
+            },
             -- Use the special "*" filetype for defining formatter configurations on
             -- any filetype
             ["*"] = {
