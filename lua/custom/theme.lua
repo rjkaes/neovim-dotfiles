@@ -1,7 +1,6 @@
 local api = vim.api
 
 require("catppuccin").setup({
-    flavour = "mocha",
     background = {
         light = "latte",
         dark = "mocha",
