@@ -1,2 +1,2 @@
 setlocal nobomb
-setlocal textwidth=100
+setlocal textwidth=120
