@@ -18,6 +18,10 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim'
         },
-        config = true,
+        opts = {
+            keywords = {
+                nocheckin = { icon = " ", color = "error", alt = { "nc" } },
+            },
+        },
     },
 }
