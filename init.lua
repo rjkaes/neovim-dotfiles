@@ -21,11 +21,11 @@ require("lazy").setup("custom.plugins", {
   ui = {
     icons = {
       cmd = "⌘",
-      config = "🛠",
+      config = "🛠️",
       event = "📅",
       ft = "📂",
-      init = "⚙",
-      keys = "🗝",
+      init = "⚙️",
+      keys = "🗝️",
       plugin = "🔌",
       runtime = "💻",
       source = "📄",
