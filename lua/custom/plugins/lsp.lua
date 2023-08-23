@@ -30,6 +30,7 @@ return {
                 local opts = { buffer = bufnr }
 
                 vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
+                vim.keymap.set('n', 'gS', function() vim.lsp.buf.signature_help() end)
                 vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
                 vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 
