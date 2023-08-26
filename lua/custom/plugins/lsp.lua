@@ -41,6 +41,7 @@ return {
             end)
 
             lsp.ensure_installed({
+                'eslint',
                 'lua_ls',
                 'omnisharp',
                 'standardrb',
