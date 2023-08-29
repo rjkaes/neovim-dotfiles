@@ -55,9 +55,6 @@ return {
 
     { 'folke/trouble.nvim' },
 
-    -- Use the project's settings if a `.editorconfig` file is defined.
-    { 'editorconfig/editorconfig-vim' },
-
     -- Undo tree
     { 'mbbill/undotree' },
 
