@@ -12,16 +12,10 @@ vim.g.netrw_altv = 1
 vim.g.netrw_winsize = 25
 
 -- Tada Configuration for TODO list
-vim.g.tada_todo_style = 'unicode'
+vim.g.tada_todo_style = 'simple'
 vim.g.tada_todo_pane_file = 'TODO'
 vim.g.tada_todo_pane_location = 'top'
 vim.g.tada_todo_switch_status_mapping = '<C-X>'
-vim.g.tada_todo_statuses = {'planned', 'doing', 'complete'}
-vim.g.tada_todo_symbols = {
-    planned = ' ',
-    doing = '🛠️',
-    complete = '✔',
-}
 
 vim.g['semshi#always_update_all_highlights'] = true
 
