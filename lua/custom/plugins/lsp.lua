@@ -18,6 +18,9 @@ return {
             { 'hrsh7th/cmp-nvim-lsp',                branch = 'main' },
             { 'hrsh7th/cmp-nvim-lsp-signature-help', branch = 'main' },
             { 'onsails/lspkind.nvim' },
+
+            -- omnisharp
+            { 'Hoffs/omnisharp-extended-lsp.nvim' },
         },
         config = function()
             local lsp = require('lsp-zero').preset({})
@@ -29,10 +32,11 @@ return {
 
                 local opts = { buffer = bufnr }
 
+                vim.keymap.set('n', 'gd', function() require('omnisharp_extended').telescope_lsp_definitions() end, opts)
                 vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
                 vim.keymap.set('n', 'gS', function() vim.lsp.buf.signature_help() end)
-                vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-                vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                vim.keymap.set('n', '<leader>rn', function() vim.lsp.buf.rename() end, opts)
+                vim.keymap.set('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts)
 
                 -- reformat buffer using the LSP
                 vim.keymap.set({ 'n', 'x' }, 'gq', function()
@@ -67,9 +71,11 @@ return {
                 }
             })
 
-            -- Configure lua language server for neovim
-            require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+            local lsp_config= require("lspconfig")
 
+            -- Configure lua language server for neovim
+            lsp_config.lua_ls.setup(lsp.nvim_lua_ls())
+            --
             -- don't initialize this language server
             -- we will use rust-tools to setup rust_analyzer
             lsp.skip_server_setup({ 'rust_analyzer' })
